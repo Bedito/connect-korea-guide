@@ -45,7 +45,7 @@ function BrowsePage() {
   const results = useQuery(browseQuery(search));
 
   const setParam = (key: keyof typeof search, value: string | undefined) => {
-    navigate({ search: (prev) => ({ ...prev, [key]: value || undefined }) });
+    navigate({ search: (prev: typeof search) => ({ ...prev, [key]: value || undefined }) });
   };
 
   const activeCount = [search.q, search.category, search.city, search.language].filter(Boolean).length;
