@@ -65,14 +65,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Seoul Compass — Trusted Local Services for Foreigners in Korea" },
+      { title: "ChinguBase — Trusted Local Services for Foreigners in Korea" },
       {
         name: "description",
         content:
           "Find English-speaking doctors, dentists, real estate agents, lawyers, salons, and more across South Korea. Verified listings, real reviews, made for expats.",
       },
       { name: "author", content: "Seoul Compass" },
-      { property: "og:title", content: "Seoul Compass — Trusted Local Services for Foreigners in Korea" },
+      { property: "og:title", content: "ChinguBase — Trusted Local Services for Foreigners in Korea" },
       {
         property: "og:description",
         content:
@@ -80,6 +80,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "ChinguBase — Trusted Local Services for Foreigners in Korea" },
+      { name: "description", content: "Find English-speaking doctors, dentists, real estate agents, lawyers, salons, and more across South Korea. Verified listings, real reviews, made for expats." },
+      { property: "og:description", content: "Find English-speaking doctors, dentists, real estate agents, lawyers, salons, and more across South Korea. Verified listings, real reviews, made for expats." },
+      { name: "twitter:description", content: "Find English-speaking doctors, dentists, real estate agents, lawyers, salons, and more across South Korea. Verified listings, real reviews, made for expats." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/841d8501-457c-4568-b50e-04a54f098357/id-preview-f9131d5d--42e1e024-17af-4b20-82f3-3e625f16619f.lovable.app-1783412146550.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/841d8501-457c-4568-b50e-04a54f098357/id-preview-f9131d5d--42e1e024-17af-4b20-82f3-3e625f16619f.lovable.app-1783412146550.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
