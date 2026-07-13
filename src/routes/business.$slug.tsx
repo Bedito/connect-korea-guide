@@ -601,6 +601,10 @@ function BusinessDetail() {
             </div>
           </section>
         )}
+
+        <div className="mt-16 flex justify-center border-t border-border/40 pt-6">
+          <ReportBusinessDialog businessId={b.id} businessName={b.name} />
+        </div>
       </div>
     </div>
   );
