@@ -25,7 +25,7 @@ export interface BusinessCardData {
 
 export function BusinessCard({ business, size = "md" }: { business: BusinessCardData; size?: "sm" | "md" | "lg" }) {
   const aspect = size === "lg" ? "aspect-[4/3]" : "aspect-[5/4]";
-  const open = isOpenNow(business.hours);
+  const open = useOpenNow(business.hours);
 
   return (
     <div className="group flex flex-col">
