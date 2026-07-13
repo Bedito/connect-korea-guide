@@ -46,6 +46,40 @@ export const featuredBusinessesQuery = queryOptions({
   },
 });
 
+export const topRatedBusinessesQuery = queryOptions({
+  queryKey: ["businesses", "top-rated"],
+  queryFn: async () => {
+    const { data, error } = await supabase
+      .from("businesses")
+      .select(BUSINESS_SELECT)
+      .eq("status", "approved")
+      .gte("review_count", 1)
+      .order("rating", { ascending: false })
+      .order("review_count", { ascending: false })
+      .limit(8);
+    if (error) throw error;
+    return data;
+  },
+});
+
+export const cityCountsQuery = queryOptions({
+  queryKey: ["cities", "counts"],
+  queryFn: async () => {
+    const { data: cities, error: cErr } = await supabase.from("cities").select("*").order("name");
+    if (cErr) throw cErr;
+    const { data: bs, error: bErr } = await supabase
+      .from("businesses")
+      .select("city_id")
+      .eq("status", "approved");
+    if (bErr) throw bErr;
+    const counts = new Map<string, number>();
+    for (const b of bs ?? []) {
+      if (b.city_id) counts.set(b.city_id, (counts.get(b.city_id) ?? 0) + 1);
+    }
+    return (cities ?? []).map((c) => ({ ...c, count: counts.get(c.id) ?? 0 }));
+  },
+});
+
 export const recentBusinessesQuery = queryOptions({
   queryKey: ["businesses", "recent"],
   queryFn: async () => {
