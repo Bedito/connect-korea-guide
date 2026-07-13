@@ -462,7 +462,11 @@ function BusinessDetail() {
                 {b.phone && (
                   <li className="flex items-start gap-3">
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
-                    <a href={`tel:${b.phone}`} className="hover:underline">
+                    <a
+                      href={`tel:${b.phone}`}
+                      className="hover:underline"
+                      onClick={() => trackEvent(b.id, "phone_click")}
+                    >
                       {b.phone}
                     </a>
                   </li>
@@ -483,6 +487,7 @@ function BusinessDetail() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="break-all hover:underline"
+                      onClick={() => trackEvent(b.id, "website_click")}
                     >
                       {b.website.replace(/^https?:\/\//, "")}
                     </a>
