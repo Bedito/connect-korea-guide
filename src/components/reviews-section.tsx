@@ -86,7 +86,7 @@ export function ReviewsSection({
         rating,
         title: title.trim() || null,
         body: body.trim(),
-        photos: photos.length ? photos : null,
+        photos: photos.length ? photos : undefined,
       };
       const { error } = await supabase
         .from("reviews")
