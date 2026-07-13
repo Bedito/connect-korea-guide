@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Compass, Heart, Search, User, LogOut } from "lucide-react";
+import { Compass, Heart, Search, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
+import { useIsAdmin } from "@/lib/roles";
 import { supabase } from "@/integrations/supabase/client";
 import {
   DropdownMenu,
@@ -13,6 +14,7 @@ import {
 
 export function SiteHeader() {
   const { user } = useAuth();
+  const isAdmin = useIsAdmin();
   const navigate = useNavigate();
 
   const signOut = async () => {
