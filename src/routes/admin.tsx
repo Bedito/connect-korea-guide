@@ -789,11 +789,11 @@ function CategoriesPanel() {
 /* ---------------- Cities ---------------- */
 function CitiesPanel() {
   const qc = useQueryClient();
-  const [form, setForm] = useState({ name: "", slug: "", sort_order: 0 });
+  const [form, setForm] = useState({ name: "", slug: "" });
   const { data = [] } = useQuery({
     queryKey: ["admin", "cities"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("cities").select("*").order("sort_order");
+      const { data, error } = await supabase.from("cities").select("*").order("name");
       if (error) throw error;
       return data;
     },
@@ -804,20 +804,20 @@ function CitiesPanel() {
       const { error } = await supabase.from("cities").insert({
         name: form.name,
         slug: form.slug || form.name.toLowerCase().replace(/\s+/g, "-"),
-        sort_order: form.sort_order,
       });
       if (error) throw error;
     },
     onSuccess: () => {
       toast("City created");
-      setForm({ name: "", slug: "", sort_order: 0 });
+      setForm({ name: "", slug: "" });
       qc.invalidateQueries({ queryKey: ["admin", "cities"] });
     },
     onError: (e: Error) => toast(e.message),
   });
 
+  type CityPatch = { name?: string; slug?: string };
   const update = useMutation({
-    mutationFn: async ({ id, patch }: { id: string; patch: Record<string, unknown> }) => {
+    mutationFn: async ({ id, patch }: { id: string; patch: CityPatch }) => {
       const { error } = await supabase.from("cities").update(patch).eq("id", id);
       if (error) throw error;
     },
@@ -838,10 +838,9 @@ function CitiesPanel() {
     <section className="space-y-6">
       <div className="rounded-xl border border-border/60 bg-card p-4">
         <h3 className="font-medium mb-3">Add city</h3>
-        <div className="grid gap-2 sm:grid-cols-3">
+        <div className="grid gap-2 sm:grid-cols-2">
           <Input placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
           <Input placeholder="slug (optional)" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
-          <Input placeholder="sort" type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })} />
         </div>
         <Button className="mt-3" disabled={!form.name} onClick={() => create.mutate()}>Create</Button>
       </div>
@@ -852,7 +851,6 @@ function CitiesPanel() {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Slug</TableHead>
-              <TableHead>Sort</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -863,9 +861,6 @@ function CitiesPanel() {
                   <Input defaultValue={c.name} onBlur={(e) => e.target.value !== c.name && update.mutate({ id: c.id, patch: { name: e.target.value } })} />
                 </TableCell>
                 <TableCell className="text-sm text-muted-foreground">{c.slug}</TableCell>
-                <TableCell>
-                  <Input className="w-20" type="number" defaultValue={c.sort_order} onBlur={(e) => Number(e.target.value) !== c.sort_order && update.mutate({ id: c.id, patch: { sort_order: Number(e.target.value) } })} />
-                </TableCell>
                 <TableCell className="text-right">
                   <Button size="sm" variant="outline" onClick={() => { if (confirm(`Delete "${c.name}"?`)) del.mutate(c.id); }}>
                     Delete
