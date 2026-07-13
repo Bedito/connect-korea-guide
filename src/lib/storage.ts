@@ -24,6 +24,20 @@ export async function uploadBusinessImage(
   return data.signedUrl;
 }
 
+export async function uploadVerificationDoc(file: File, userId: string): Promise<string> {
+  const ext = file.name.split(".").pop()?.toLowerCase() || "pdf";
+  const path = `${userId}/verification/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error: upErr } = await supabase.storage
+    .from(BUCKET)
+    .upload(path, file, { upsert: false, contentType: file.type || "application/octet-stream" });
+  if (upErr) throw upErr;
+  const { data, error } = await supabase.storage
+    .from(BUCKET)
+    .createSignedUrl(path, TEN_YEARS);
+  if (error || !data) throw error ?? new Error("Could not create signed URL");
+  return data.signedUrl;
+}
+
 const REVIEW_BUCKET = "review-photos";
 
 export async function uploadReviewPhoto(file: File, userId: string): Promise<string> {
