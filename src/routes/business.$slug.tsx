@@ -229,15 +229,17 @@ function BusinessDetail() {
                       <BadgeCheck className="h-3.5 w-3.5" /> Verified
                     </span>
                   )}
-                  <span
-                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${
-                      open
-                        ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    <Clock className="h-3.5 w-3.5" /> {open ? "Open now" : "Closed"}
-                  </span>
+                  {open !== null && (
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${
+                        open
+                          ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400"
+                          : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      <Clock className="h-3.5 w-3.5" /> {open ? "Open now" : "Closed"}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
