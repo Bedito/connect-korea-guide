@@ -77,7 +77,7 @@ function RegisterBusinessPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/auth", search: { redirect: "/register-business" } as never });
+    if (!loading && !user) navigate({ to: "/auth", search: { mode: "signin" } });
   }, [user, loading, navigate]);
   if (loading || !user) return null;
 
