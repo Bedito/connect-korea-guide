@@ -23,3 +23,19 @@ export async function uploadBusinessImage(
   if (error || !data) throw error ?? new Error("Could not create signed URL");
   return data.signedUrl;
 }
+
+const REVIEW_BUCKET = "review-photos";
+
+export async function uploadReviewPhoto(file: File, userId: string): Promise<string> {
+  const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+  const path = `${userId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error: upErr } = await supabase.storage
+    .from(REVIEW_BUCKET)
+    .upload(path, file, { upsert: false, contentType: file.type });
+  if (upErr) throw upErr;
+  const { data, error } = await supabase.storage
+    .from(REVIEW_BUCKET)
+    .createSignedUrl(path, TEN_YEARS);
+  if (error || !data) throw error ?? new Error("Could not create signed URL");
+  return data.signedUrl;
+}

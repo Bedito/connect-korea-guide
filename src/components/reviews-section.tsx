@@ -8,13 +8,16 @@ import {
   myReviewForBusinessQuery,
   type ReviewRow,
 } from "@/lib/reviews";
+import { uploadReviewPhoto } from "@/lib/storage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { StarRating } from "@/components/star-rating";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
-import { Trash2 } from "lucide-react";
+import { Trash2, ImagePlus, X } from "lucide-react";
+
+const MAX_PHOTOS = 6;
 
 export function ReviewsSection({
   businessId,
@@ -31,12 +34,15 @@ export function ReviewsSection({
   const [rating, setRating] = useState(5);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (mine) {
       setRating(mine.rating);
       setTitle(mine.title ?? "");
       setBody(mine.body);
+      setPhotos(mine.photos ?? []);
     }
   }, [mine]);
 
@@ -45,6 +51,30 @@ export function ReviewsSection({
     qc.invalidateQueries({ queryKey: ["reviews", "mine", businessId] });
     qc.invalidateQueries({ queryKey: ["business", businessId] });
   };
+
+  async function handleFiles(files: FileList | null) {
+    if (!files || !user) return;
+    const room = MAX_PHOTOS - photos.length;
+    const list = Array.from(files).slice(0, room);
+    if (list.length === 0) return;
+    setUploading(true);
+    try {
+      const urls: string[] = [];
+      for (const f of list) {
+        if (!f.type.startsWith("image/")) continue;
+        if (f.size > 8 * 1024 * 1024) {
+          toast(`${f.name} is larger than 8MB`);
+          continue;
+        }
+        urls.push(await uploadReviewPhoto(f, user.id));
+      }
+      setPhotos((p) => [...p, ...urls]);
+    } catch (e) {
+      toast((e as Error).message);
+    } finally {
+      setUploading(false);
+    }
+  }
 
   const submit = useMutation({
     mutationFn: async () => {
@@ -56,6 +86,7 @@ export function ReviewsSection({
         rating,
         title: title.trim() || null,
         body: body.trim(),
+        photos: photos.length ? photos : undefined,
       };
       const { error } = await supabase
         .from("reviews")
@@ -79,6 +110,7 @@ export function ReviewsSection({
       setRating(5);
       setTitle("");
       setBody("");
+      setPhotos([]);
       invalidate();
     },
   });
@@ -118,10 +150,50 @@ export function ReviewsSection({
             maxLength={2000}
             onChange={(e) => setBody(e.target.value)}
           />
-          <div className="mt-3 flex gap-2">
-            <Button onClick={() => submit.mutate()} disabled={submit.isPending}>
+
+          {photos.length > 0 && (
+            <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
+              {photos.map((url, i) => (
+                <div
+                  key={url}
+                  className="group relative aspect-square overflow-hidden rounded-lg border border-border/60"
+                >
+                  <img src={url} alt="" className="h-full w-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => setPhotos((p) => p.filter((_, idx) => idx !== i))}
+                    className="absolute right-1 top-1 rounded-full bg-black/60 p-1 text-white opacity-0 transition group-hover:opacity-100"
+                    aria-label="Remove photo"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <Button onClick={() => submit.mutate()} disabled={submit.isPending || uploading}>
               {submit.isPending ? "Saving..." : mine ? "Update review" : "Post review"}
             </Button>
+            <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-border/70 px-3 py-2 text-sm hover:bg-muted">
+              <ImagePlus className="h-4 w-4" />
+              {uploading ? "Uploading..." : "Add photos"}
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                disabled={uploading || photos.length >= MAX_PHOTOS}
+                onChange={(e) => {
+                  handleFiles(e.target.files);
+                  e.target.value = "";
+                }}
+              />
+            </label>
+            <span className="text-xs text-muted-foreground">
+              {photos.length}/{MAX_PHOTOS}
+            </span>
             {mine && (
               <Button
                 variant="ghost"
@@ -208,6 +280,27 @@ function ReviewItem({
       <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-foreground/85">
         {review.body}
       </p>
+
+      {review.photos && review.photos.length > 0 && (
+        <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
+          {review.photos.map((url) => (
+            <a
+              key={url}
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className="aspect-square overflow-hidden rounded-lg border border-border/60"
+            >
+              <img
+                src={url}
+                alt="Review photo"
+                loading="lazy"
+                className="h-full w-full object-cover transition hover:scale-105"
+              />
+            </a>
+          ))}
+        </div>
+      )}
 
       {review.owner_reply && !editing && (
         <div className="mt-4 rounded-xl bg-muted/60 p-4">

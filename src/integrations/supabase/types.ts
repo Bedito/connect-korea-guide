@@ -459,6 +459,47 @@ export type Database = {
         }
         Relationships: []
       }
+      reports: {
+        Row: {
+          business_id: string
+          created_at: string
+          details: string | null
+          id: string
+          reason: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          details?: string | null
+          id?: string
+          reason: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          details?: string | null
+          id?: string
+          reason?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reviews: {
         Row: {
           body: string

@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { ReviewsSection } from "@/components/reviews-section";
 import { ClaimBusinessDialog } from "@/components/claim-business-dialog";
+import { ReportBusinessDialog } from "@/components/report-business-dialog";
 import { BusinessCard } from "@/components/business-card";
 import { trackEvent } from "@/lib/track";
 
@@ -600,6 +601,10 @@ function BusinessDetail() {
             </div>
           </section>
         )}
+
+        <div className="mt-16 flex justify-center border-t border-border/40 pt-6">
+          <ReportBusinessDialog businessId={b.id} businessName={b.name} />
+        </div>
       </div>
     </div>
   );
