@@ -182,6 +182,12 @@ function BusinessDetail() {
               </Button>
             </div>
           </div>
+          {!b.owner_id && (
+            <div className="mt-6 flex items-center justify-between rounded-xl border border-dashed border-border/70 bg-muted/40 px-4 py-3 text-sm">
+              <span className="text-muted-foreground">Do you run this business?</span>
+              <ClaimBusinessDialog businessId={b.id} businessName={b.name} />
+            </div>
+          )}
         </div>
 
         {/* Body */}
@@ -224,12 +230,7 @@ function BusinessDetail() {
               </section>
             )}
 
-            <section>
-              <h2 className="text-display text-3xl">Reviews</h2>
-              <div className="mt-4 rounded-2xl border border-dashed border-border/70 p-8 text-center text-sm text-muted-foreground">
-                Reviews are coming soon. Sign up to be first to review this business.
-              </div>
-            </section>
+            <ReviewsSection businessId={b.id} isOwner={!!user && b.owner_id === user.id} />
           </div>
 
           <aside className="space-y-4">
