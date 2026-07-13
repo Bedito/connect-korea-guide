@@ -119,7 +119,40 @@ export function VerificationRequestDialog({
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="vproof">Proof link</Label>
+            <Label htmlFor="vfile">Attach document</Label>
+            {file ? (
+              <div className="flex items-center justify-between rounded-md border border-border/60 bg-muted/40 px-3 py-2 text-sm">
+                <span className="truncate">{file.name}</span>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  className="h-6 w-6"
+                  onClick={() => setFile(null)}
+                  aria-label="Remove file"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <label
+                htmlFor="vfile"
+                className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-border/70 px-3 py-3 text-sm text-muted-foreground hover:bg-muted/40"
+              >
+                <Upload className="h-4 w-4" />
+                Upload registration, invoice, or ID (PDF or image)
+              </label>
+            )}
+            <Input
+              id="vfile"
+              type="file"
+              accept="application/pdf,image/*"
+              className="hidden"
+              onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="vproof">Or paste a proof link</Label>
             <Input
               id="vproof"
               value={proofUrl}
