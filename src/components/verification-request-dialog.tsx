@@ -52,12 +52,22 @@ export function VerificationRequestDialog({
   const submit = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("Please sign in first");
+      let finalProof = proofUrl.trim();
+      if (file) {
+        setUploading(true);
+        try {
+          finalProof = await uploadVerificationDoc(file, user.id);
+        } finally {
+          setUploading(false);
+        }
+      }
+      if (!finalProof) throw new Error("Please attach a document or provide a proof link");
       const { error } = await supabase.from("business_claims").upsert(
         {
           business_id: businessId,
           user_id: user.id,
           message: message.trim() || null,
-          proof_url: proofUrl.trim() || null,
+          proof_url: finalProof || null,
           status: "pending",
         },
         { onConflict: "business_id,user_id" },
