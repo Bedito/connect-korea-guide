@@ -158,7 +158,7 @@ function BusinessDetail() {
   const faqs = Array.isArray(b.faqs) ? (b.faqs as FaqItem[]) : [];
   const videos = (b.videos ?? []) as string[];
   const photos = (b.photos ?? []) as string[];
-  const open = isOpenNow(b.hours);
+  const open = useOpenNow(b.hours);
   const naverUrl = b.address
     ? `https://map.naver.com/v5/search/${encodeURIComponent(b.address)}`
     : null;
