@@ -292,7 +292,7 @@ function BrowsePage() {
                   onClear={() => setParam("district", undefined)}
                 />
               )}
-              {search.languages.map((l) => (
+              {search.languages.map((l: string) => (
                 <ActiveChip key={l} label={LANGUAGES.find((x) => x.code === l)?.label ?? l} onClear={() => toggleLang(l)} />
               ))}
               {TOGGLES.filter((t) => search[t.key]).map((t) => (
