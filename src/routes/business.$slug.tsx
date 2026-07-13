@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { ReviewsSection } from "@/components/reviews-section";
 import { ClaimBusinessDialog } from "@/components/claim-business-dialog";
+import { ReportBusinessDialog } from "@/components/report-business-dialog";
 import { BusinessCard } from "@/components/business-card";
 import { trackEvent } from "@/lib/track";
 
