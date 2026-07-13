@@ -22,7 +22,7 @@ export function businessReviewsQuery(businessId: string) {
       const { data, error } = await supabase
         .from("reviews")
         .select(
-          "id, business_id, user_id, rating, title, body, owner_reply, owner_reply_at, created_at",
+          "id, business_id, user_id, rating, title, body, photos, owner_reply, owner_reply_at, created_at",
         )
         .eq("business_id", businessId)
         .eq("status", "approved")
