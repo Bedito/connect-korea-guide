@@ -196,10 +196,15 @@ export function browseQuery(filters: BrowseFilters) {
 
       switch (filters.sort) {
         case "rating":
-          query = query.order("rating", { ascending: false }).order("review_count", { ascending: false });
+          query = query
+            .order("verified", { ascending: false })
+            .order("rating", { ascending: false })
+            .order("review_count", { ascending: false });
           break;
         case "reviews":
-          query = query.order("review_count", { ascending: false });
+          query = query
+            .order("verified", { ascending: false })
+            .order("review_count", { ascending: false });
           break;
         case "newest":
           query = query.order("created_at", { ascending: false });
@@ -207,7 +212,10 @@ export function browseQuery(filters: BrowseFilters) {
         case "distance":
         case "recommended":
         default:
-          query = query.order("featured", { ascending: false }).order("rating", { ascending: false });
+          query = query
+            .order("featured", { ascending: false })
+            .order("verified", { ascending: false })
+            .order("rating", { ascending: false });
       }
 
       const { data, error } = await query;
