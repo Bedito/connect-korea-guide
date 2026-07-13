@@ -83,10 +83,19 @@ function MyBusinesses({ userId }: { userId: string }) {
 
   return (
     <section>
-      <h2 className="text-display text-3xl">Your businesses</h2>
+      <div className="flex items-end justify-between gap-4">
+        <h2 className="text-display text-3xl">Your businesses</h2>
+        <Link
+          to="/register-business"
+          className="inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm hover:bg-accent"
+        >
+          + List a new business
+        </Link>
+      </div>
       {data.length === 0 ? (
         <div className="mt-4 rounded-xl border border-dashed border-border/60 p-6 text-sm text-muted-foreground">
-          You don't own any listings yet. Find your business and click "Claim".
+          You don't own any listings yet.{" "}
+          <Link to="/register-business" className="underline">List your business</Link>, or find an existing one and click "Claim".
         </div>
       ) : (
         <div className="mt-6 space-y-6">
