@@ -19,6 +19,8 @@ import { useAuth } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { ReviewsSection } from "@/components/reviews-section";
+import { ClaimBusinessDialog } from "@/components/claim-business-dialog";
 
 export const Route = createFileRoute("/business/$slug")({
   loader: async ({ params, context }) => {
