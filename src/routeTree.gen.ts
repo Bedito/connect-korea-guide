@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
 
@@ -26,6 +28,11 @@ const FavoritesRoute = FavoritesRouteImport.update({
   path: '/favorites',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BrowseRoute = BrowseRouteImport.update({
   id: '/browse',
   path: '/browse',
@@ -34,6 +41,11 @@ const BrowseRoute = BrowseRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -49,16 +61,20 @@ const BusinessSlugRoute = BusinessSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/business/$slug': typeof BusinessSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/business/$slug': typeof BusinessSlugRoute
@@ -66,8 +82,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
+  '/dashboard': typeof DashboardRoute
   '/favorites': typeof FavoritesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/business/$slug': typeof BusinessSlugRoute
@@ -76,24 +94,30 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/auth'
     | '/browse'
+    | '/dashboard'
     | '/favorites'
     | '/sitemap.xml'
     | '/business/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/auth'
     | '/browse'
+    | '/dashboard'
     | '/favorites'
     | '/sitemap.xml'
     | '/business/$slug'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/auth'
     | '/browse'
+    | '/dashboard'
     | '/favorites'
     | '/sitemap.xml'
     | '/business/$slug'
@@ -101,8 +125,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   BrowseRoute: typeof BrowseRoute
+  DashboardRoute: typeof DashboardRoute
   FavoritesRoute: typeof FavoritesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BusinessSlugRoute: typeof BusinessSlugRoute
@@ -124,6 +150,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FavoritesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/browse': {
       id: '/browse'
       path: '/browse'
@@ -136,6 +169,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -157,8 +197,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   BrowseRoute: BrowseRoute,
+  DashboardRoute: DashboardRoute,
   FavoritesRoute: FavoritesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BusinessSlugRoute: BusinessSlugRoute,

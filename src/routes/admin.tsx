@@ -202,8 +202,9 @@ function PendingBusinesses() {
     },
   });
 
+  type BizPatch = { status?: string; featured?: boolean; verified?: boolean };
   const update = useMutation({
-    mutationFn: async ({ id, patch }: { id: string; patch: Record<string, unknown> }) => {
+    mutationFn: async ({ id, patch }: { id: string; patch: BizPatch }) => {
       const { error } = await supabase.from("businesses").update(patch).eq("id", id);
       if (error) throw error;
     },
