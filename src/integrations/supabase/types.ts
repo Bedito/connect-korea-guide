@@ -394,6 +394,51 @@ export type Database = {
           },
         ]
       }
+      homepage_sections: {
+        Row: {
+          business_ids: string[]
+          category_slug: string | null
+          city_slug: string | null
+          created_at: string
+          enabled: boolean
+          id: string
+          key: string
+          section_type: string
+          sort_order: number
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          business_ids?: string[]
+          category_slug?: string | null
+          city_slug?: string | null
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          key: string
+          section_type?: string
+          sort_order?: number
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          business_ids?: string[]
+          category_slug?: string | null
+          city_slug?: string | null
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          key?: string
+          section_type?: string
+          sort_order?: number
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           body: string
