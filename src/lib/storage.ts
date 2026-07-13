@@ -4,7 +4,7 @@ const BUCKET = "business-media";
 // Long-lived signed URL (~10 years) since the bucket is private.
 const TEN_YEARS = 60 * 60 * 24 * 365 * 10;
 
-export type UploadKind = "logo" | "cover" | "gallery" | "staff";
+export type UploadKind = "logo" | "cover" | "gallery" | "staff" | "verification";
 
 export async function uploadBusinessImage(
   file: File,
