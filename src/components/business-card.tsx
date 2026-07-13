@@ -3,7 +3,7 @@ import { MapPin, Star, BadgeCheck, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { isOpenNow } from "@/lib/queries";
+import { useOpenNow } from "@/hooks/use-open-now";
 
 export interface BusinessCardData {
   slug: string;
