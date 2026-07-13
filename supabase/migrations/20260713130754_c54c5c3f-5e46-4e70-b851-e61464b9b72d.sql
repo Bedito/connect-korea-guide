@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.recalc_business_rating() FROM PUBLIC, anon, authenticated;
