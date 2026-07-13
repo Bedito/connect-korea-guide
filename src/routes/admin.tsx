@@ -45,17 +45,15 @@ export const Route = createFileRoute("/admin")({
 
 function AdminPage() {
   const { user, loading } = useAuth();
-  const isAdmin = useIsAdmin();
+  const { isAdmin, loading: roleLoading } = useIsAdmin();
   const navigate = useNavigate();
-  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     if (loading) return;
     if (!user) navigate({ to: "/auth" });
-    else setChecked(true);
   }, [user, loading, navigate]);
 
-  if (!checked) return null;
+  if (loading || roleLoading || !user) return null;
   if (!isAdmin) {
     return (
       <div className="mx-auto max-w-lg px-4 py-24 text-center">

@@ -14,7 +14,7 @@ import {
 
 export function SiteHeader() {
   const { user } = useAuth();
-  const isAdmin = useIsAdmin();
+  const { isAdmin } = useIsAdmin();
   const navigate = useNavigate();
 
   const signOut = async () => {
