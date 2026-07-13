@@ -241,11 +241,11 @@ export function ServicesSection({
   const add = () => {
     const v = input.trim();
     if (!v) return;
-    if (values.services.includes(v)) return;
-    set({ services: [...values.services, v] });
+    if ((values.services ?? []).includes(v)) return;
+    set({ services: [...(values.services ?? []), v] });
     setInput("");
   };
-  const remove = (v: string) => set({ services: values.services.filter((s) => s !== v) });
+  const remove = (v: string) => set({ services: (values.services ?? []).filter((s) => s !== v) });
   return (
     <div className="space-y-4">
       <div>
@@ -261,7 +261,7 @@ export function ServicesSection({
         </div>
       </div>
       <div className="flex flex-wrap gap-2">
-        {values.services.map((s) => (
+        {(values.services ?? []).map((s) => (
           <Badge key={s} variant="secondary" className="gap-1">
             {s}
             <button type="button" onClick={() => remove(s)} aria-label={`Remove ${s}`}>
@@ -276,12 +276,12 @@ export function ServicesSection({
           {AMENITY_OPTIONS.map((a) => (
             <label key={a.value} className="flex items-center gap-2 rounded-md border p-3 cursor-pointer hover:bg-accent">
               <Checkbox
-                checked={values.amenities.includes(a.value)}
+                checked={(values.amenities ?? []).includes(a.value)}
                 onCheckedChange={(checked) => {
                   set({
                     amenities: checked
-                      ? [...values.amenities, a.value]
-                      : values.amenities.filter((x) => x !== a.value),
+                      ? [...(values.amenities ?? []), a.value]
+                      : (values.amenities ?? []).filter((x) => x !== a.value),
                   });
                 }}
               />
@@ -442,7 +442,7 @@ export function MediaSection({
         const u = await uploadBusinessImage(f, userId, "gallery");
         urls.push(u);
       }
-      set({ photos: [...values.photos, ...urls] });
+      set({ photos: [...(values.photos ?? []), ...urls] });
     } catch (e) {
       toast((e as Error).message);
     } finally {
@@ -470,12 +470,12 @@ export function MediaSection({
       <div>
         <Label className="mb-2 block">Gallery</Label>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {values.photos.map((p, i) => (
+          {(values.photos ?? []).map((p, i) => (
             <div key={p + i} className="relative aspect-square overflow-hidden rounded-md border">
               <img src={p} alt="" className="h-full w-full object-cover" />
               <button
                 type="button"
-                onClick={() => set({ photos: values.photos.filter((_, idx) => idx !== i) })}
+                onClick={() => set({ photos: (values.photos ?? []).filter((_, idx) => idx !== i) })}
                 className="absolute right-1 top-1 rounded-full bg-background/90 p-1 shadow"
                 aria-label="Remove photo"
               >
