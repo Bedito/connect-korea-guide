@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import { ReviewsSection } from "@/components/reviews-section";
 import { ClaimBusinessDialog } from "@/components/claim-business-dialog";
 import { BusinessCard } from "@/components/business-card";
+import { trackEvent } from "@/lib/track";
 
 export const Route = createFileRoute("/business/$slug")({
   loader: async ({ params, context }) => {
