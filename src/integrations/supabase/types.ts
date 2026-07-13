@@ -161,6 +161,7 @@ export type Database = {
           logo: string | null
           longitude: number | null
           name: string
+          naver_maps_url: string | null
           owner_id: string | null
           phone: string | null
           photos: string[]
@@ -200,6 +201,7 @@ export type Database = {
           logo?: string | null
           longitude?: number | null
           name: string
+          naver_maps_url?: string | null
           owner_id?: string | null
           phone?: string | null
           photos?: string[]
@@ -239,6 +241,7 @@ export type Database = {
           logo?: string | null
           longitude?: number | null
           name?: string
+          naver_maps_url?: string | null
           owner_id?: string | null
           phone?: string | null
           photos?: string[]

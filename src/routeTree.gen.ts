@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RegisterBusinessRouteImport } from './routes/register-business'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BrowseRouteImport } from './routes/browse'
@@ -17,10 +18,16 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
+import { Route as DashboardBusinessIdEditRouteImport } from './routes/dashboard.business.$id.edit'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterBusinessRoute = RegisterBusinessRouteImport.update({
+  id: '/register-business',
+  path: '/register-business',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritesRoute = FavoritesRouteImport.update({
@@ -58,26 +65,35 @@ const BusinessSlugRoute = BusinessSlugRouteImport.update({
   path: '/business/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardBusinessIdEditRoute = DashboardBusinessIdEditRouteImport.update({
+  id: '/business/$id/edit',
+  path: '/business/$id/edit',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/favorites': typeof FavoritesRoute
+  '/register-business': typeof RegisterBusinessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/business/$slug': typeof BusinessSlugRoute
+  '/dashboard/business/$id/edit': typeof DashboardBusinessIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/favorites': typeof FavoritesRoute
+  '/register-business': typeof RegisterBusinessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/business/$slug': typeof BusinessSlugRoute
+  '/dashboard/business/$id/edit': typeof DashboardBusinessIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -85,10 +101,12 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/browse': typeof BrowseRoute
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/favorites': typeof FavoritesRoute
+  '/register-business': typeof RegisterBusinessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/business/$slug': typeof BusinessSlugRoute
+  '/dashboard/business/$id/edit': typeof DashboardBusinessIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -99,8 +117,10 @@ export interface FileRouteTypes {
     | '/browse'
     | '/dashboard'
     | '/favorites'
+    | '/register-business'
     | '/sitemap.xml'
     | '/business/$slug'
+    | '/dashboard/business/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,8 +129,10 @@ export interface FileRouteTypes {
     | '/browse'
     | '/dashboard'
     | '/favorites'
+    | '/register-business'
     | '/sitemap.xml'
     | '/business/$slug'
+    | '/dashboard/business/$id/edit'
   id:
     | '__root__'
     | '/'
@@ -119,8 +141,10 @@ export interface FileRouteTypes {
     | '/browse'
     | '/dashboard'
     | '/favorites'
+    | '/register-business'
     | '/sitemap.xml'
     | '/business/$slug'
+    | '/dashboard/business/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -128,8 +152,9 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   BrowseRoute: typeof BrowseRoute
-  DashboardRoute: typeof DashboardRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   FavoritesRoute: typeof FavoritesRoute
+  RegisterBusinessRoute: typeof RegisterBusinessRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BusinessSlugRoute: typeof BusinessSlugRoute
 }
@@ -141,6 +166,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register-business': {
+      id: '/register-business'
+      path: '/register-business'
+      fullPath: '/register-business'
+      preLoaderRoute: typeof RegisterBusinessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favorites': {
@@ -192,16 +224,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BusinessSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/business/$id/edit': {
+      id: '/dashboard/business/$id/edit'
+      path: '/business/$id/edit'
+      fullPath: '/dashboard/business/$id/edit'
+      preLoaderRoute: typeof DashboardBusinessIdEditRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
+
+interface DashboardRouteChildren {
+  DashboardBusinessIdEditRoute: typeof DashboardBusinessIdEditRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardBusinessIdEditRoute: DashboardBusinessIdEditRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   BrowseRoute: BrowseRoute,
-  DashboardRoute: DashboardRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   FavoritesRoute: FavoritesRoute,
+  RegisterBusinessRoute: RegisterBusinessRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BusinessSlugRoute: BusinessSlugRoute,
 }
