@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
 import { StarRating } from "@/components/star-rating";
+import { VerificationRequestDialog } from "@/components/verification-request-dialog";
 import {
   Star,
   Eye,
@@ -14,6 +15,7 @@ import {
   MessageSquare,
   Calendar,
   MessageCircle,
+  BadgeCheck,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
@@ -63,6 +65,7 @@ type OwnedBusiness = {
   name: string;
   slug: string;
   status: string;
+  verified: boolean;
   rating: number;
   review_count: number;
 };
@@ -73,7 +76,7 @@ function MyBusinesses({ userId }: { userId: string }) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("businesses")
-        .select("id, name, slug, status, rating, review_count")
+        .select("id, name, slug, status, verified, rating, review_count")
         .eq("owner_id", userId)
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -175,23 +178,33 @@ function BusinessDashboardCard({ business: b }: { business: OwnedBusiness }) {
           >
             {b.name}
           </Link>
-          <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             <Badge variant="outline" className="capitalize">
               {b.status}
             </Badge>
+            {b.verified && (
+              <Badge variant="secondary" className="gap-1">
+                <BadgeCheck className="h-3 w-3" /> Verified
+              </Badge>
+            )}
             <span className="inline-flex items-center gap-1">
               <Star className="h-3 w-3 fill-foreground" />
               {Number(b.rating).toFixed(1)} avg
             </span>
           </div>
         </div>
-        <Link
-          to="/dashboard/business/$id/edit"
-          params={{ id: b.id }}
-          className="inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm hover:bg-accent"
-        >
-          Edit profile
-        </Link>
+        <div className="flex flex-wrap items-center gap-2">
+          {!b.verified && (
+            <VerificationRequestDialog businessId={b.id} businessName={b.name} />
+          )}
+          <Link
+            to="/dashboard/business/$id/edit"
+            params={{ id: b.id }}
+            className="inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm hover:bg-accent"
+          >
+            Edit profile
+          </Link>
+        </div>
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
