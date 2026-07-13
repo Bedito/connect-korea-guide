@@ -69,9 +69,14 @@ export type Database = {
           description: string | null
           district_id: string | null
           email: string | null
+          faqs: Json
           featured: boolean
+          google_maps_url: string | null
+          holiday_notice: string | null
           hours: Json | null
           id: string
+          instagram: string | null
+          kakao_id: string | null
           languages: string[]
           latitude: number | null
           logo: string | null
@@ -81,6 +86,7 @@ export type Database = {
           phone: string | null
           photos: string[]
           price_level: number | null
+          pricing: Json
           rating: number
           review_count: number
           services: string[]
@@ -89,6 +95,7 @@ export type Database = {
           tagline: string | null
           updated_at: string
           verified: boolean
+          videos: string[]
           website: string | null
         }
         Insert: {
@@ -101,9 +108,14 @@ export type Database = {
           description?: string | null
           district_id?: string | null
           email?: string | null
+          faqs?: Json
           featured?: boolean
+          google_maps_url?: string | null
+          holiday_notice?: string | null
           hours?: Json | null
           id?: string
+          instagram?: string | null
+          kakao_id?: string | null
           languages?: string[]
           latitude?: number | null
           logo?: string | null
@@ -113,6 +125,7 @@ export type Database = {
           phone?: string | null
           photos?: string[]
           price_level?: number | null
+          pricing?: Json
           rating?: number
           review_count?: number
           services?: string[]
@@ -121,6 +134,7 @@ export type Database = {
           tagline?: string | null
           updated_at?: string
           verified?: boolean
+          videos?: string[]
           website?: string | null
         }
         Update: {
@@ -133,9 +147,14 @@ export type Database = {
           description?: string | null
           district_id?: string | null
           email?: string | null
+          faqs?: Json
           featured?: boolean
+          google_maps_url?: string | null
+          holiday_notice?: string | null
           hours?: Json | null
           id?: string
+          instagram?: string | null
+          kakao_id?: string | null
           languages?: string[]
           latitude?: number | null
           logo?: string | null
@@ -145,6 +164,7 @@ export type Database = {
           phone?: string | null
           photos?: string[]
           price_level?: number | null
+          pricing?: Json
           rating?: number
           review_count?: number
           services?: string[]
@@ -153,6 +173,7 @@ export type Database = {
           tagline?: string | null
           updated_at?: string
           verified?: boolean
+          videos?: string[]
           website?: string | null
         }
         Relationships: [
@@ -361,6 +382,50 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "reviews_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      staff: {
+        Row: {
+          business_id: string
+          created_at: string
+          id: string
+          languages: string[]
+          name: string
+          photo: string | null
+          position: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          id?: string
+          languages?: string[]
+          name: string
+          photo?: string | null
+          position?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          id?: string
+          languages?: string[]
+          name?: string
+          photo?: string | null
+          position?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
             referencedRelation: "businesses"
