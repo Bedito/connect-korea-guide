@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { Badge } from "@/components/ui/badge";
 import { StarRating } from "@/components/star-rating";
+import { VerificationRequestDialog } from "@/components/verification-request-dialog";
 import {
   Star,
   Eye,
@@ -14,6 +15,7 @@ import {
   MessageSquare,
   Calendar,
   MessageCircle,
+  BadgeCheck,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
