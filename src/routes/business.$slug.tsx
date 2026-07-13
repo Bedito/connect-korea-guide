@@ -21,8 +21,8 @@ import {
   businessBySlugQuery,
   staffByBusinessQuery,
   nearbyBusinessesQuery,
-  isOpenNow,
 } from "@/lib/queries";
+import { useOpenNow } from "@/hooks/use-open-now";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -158,7 +158,7 @@ function BusinessDetail() {
   const faqs = Array.isArray(b.faqs) ? (b.faqs as FaqItem[]) : [];
   const videos = (b.videos ?? []) as string[];
   const photos = (b.photos ?? []) as string[];
-  const open = isOpenNow(b.hours);
+  const open = useOpenNow(b.hours);
   const naverUrl = b.address
     ? `https://map.naver.com/v5/search/${encodeURIComponent(b.address)}`
     : null;
@@ -229,15 +229,17 @@ function BusinessDetail() {
                       <BadgeCheck className="h-3.5 w-3.5" /> Verified
                     </span>
                   )}
-                  <span
-                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${
-                      open
-                        ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    <Clock className="h-3.5 w-3.5" /> {open ? "Open now" : "Closed"}
-                  </span>
+                  {open !== null && (
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${
+                        open
+                          ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400"
+                          : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      <Clock className="h-3.5 w-3.5" /> {open ? "Open now" : "Closed"}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
