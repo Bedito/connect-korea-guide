@@ -30,6 +30,7 @@ import { useEffect, useState } from "react";
 import { ReviewsSection } from "@/components/reviews-section";
 import { ClaimBusinessDialog } from "@/components/claim-business-dialog";
 import { BusinessCard } from "@/components/business-card";
+import { trackEvent } from "@/lib/track";
 
 export const Route = createFileRoute("/business/$slug")({
   loader: async ({ params, context }) => {
@@ -101,6 +102,10 @@ function BusinessDetail() {
     }),
     enabled: !!b?.id,
   });
+
+  useEffect(() => {
+    if (b?.id) trackEvent(b.id, "profile_visit");
+  }, [b?.id]);
 
   useEffect(() => {
     if (!user || !b) return;
@@ -457,7 +462,11 @@ function BusinessDetail() {
                 {b.phone && (
                   <li className="flex items-start gap-3">
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
-                    <a href={`tel:${b.phone}`} className="hover:underline">
+                    <a
+                      href={`tel:${b.phone}`}
+                      className="hover:underline"
+                      onClick={() => trackEvent(b.id, "phone_click")}
+                    >
                       {b.phone}
                     </a>
                   </li>
@@ -478,6 +487,7 @@ function BusinessDetail() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="break-all hover:underline"
+                      onClick={() => trackEvent(b.id, "website_click")}
                     >
                       {b.website.replace(/^https?:\/\//, "")}
                     </a>
