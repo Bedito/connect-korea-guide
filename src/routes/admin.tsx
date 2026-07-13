@@ -716,8 +716,9 @@ function CategoriesPanel() {
     onError: (e: Error) => toast(e.message),
   });
 
+  type CatPatch = { name?: string; slug?: string; icon?: string | null; sort_order?: number };
   const update = useMutation({
-    mutationFn: async ({ id, patch }: { id: string; patch: Record<string, unknown> }) => {
+    mutationFn: async ({ id, patch }: { id: string; patch: CatPatch }) => {
       const { error } = await supabase.from("categories").update(patch).eq("id", id);
       if (error) throw error;
     },
