@@ -21,8 +21,8 @@ import {
   businessBySlugQuery,
   staffByBusinessQuery,
   nearbyBusinessesQuery,
-  isOpenNow,
 } from "@/lib/queries";
+import { useOpenNow } from "@/hooks/use-open-now";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
