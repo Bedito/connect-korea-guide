@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 const BUSINESS_SELECT = `
   id, slug, name, tagline, description, address, phone, website, email,
   cover_image, logo, photos, languages, services, amenities, hours,
-  price_level, rating, review_count, verified, featured, latitude, longitude,
+  price_level, rating, review_count, verified, featured, latitude, longitude, owner_id,
   categories:category_id ( id, name, slug, icon ),
   cities:city_id ( id, name, slug ),
   districts:district_id ( id, name, slug )
