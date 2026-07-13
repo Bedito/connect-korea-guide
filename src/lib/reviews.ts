@@ -21,13 +21,29 @@ export function businessReviewsQuery(businessId: string) {
       const { data, error } = await supabase
         .from("reviews")
         .select(
-          "id, business_id, user_id, rating, title, body, owner_reply, owner_reply_at, created_at, profiles:user_id ( display_name, avatar_url )",
+          "id, business_id, user_id, rating, title, body, owner_reply, owner_reply_at, created_at",
         )
         .eq("business_id", businessId)
         .eq("status", "approved")
         .order("created_at", { ascending: false });
       if (error) throw error;
-      return (data ?? []) as unknown as ReviewRow[];
+      const rows = (data ?? []) as Omit<ReviewRow, "profiles">[];
+      if (rows.length === 0) return [] as ReviewRow[];
+      const userIds = Array.from(new Set(rows.map((r) => r.user_id)));
+      const { data: profs } = await supabase
+        .from("profiles")
+        .select("id, display_name, avatar_url")
+        .in("id", userIds);
+      const map = new Map((profs ?? []).map((p) => [p.id, p]));
+      return rows.map((r) => ({
+        ...r,
+        profiles: map.get(r.user_id)
+          ? {
+              display_name: map.get(r.user_id)!.display_name,
+              avatar_url: map.get(r.user_id)!.avatar_url,
+            }
+          : null,
+      })) as ReviewRow[];
     },
   });
 }
