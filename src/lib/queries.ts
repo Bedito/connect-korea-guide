@@ -130,7 +130,7 @@ const AMENITY_FLAGS: Record<string, string> = {
   reservation: "reservation_required",
 };
 
-function isOpenNow(hours: unknown): boolean {
+export function isOpenNow(hours: unknown): boolean {
   if (!hours || typeof hours !== "object") return true;
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
   const now = new Date();
