@@ -3,8 +3,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 const BUSINESS_SELECT = `
   id, slug, name, tagline, description, address, phone, website, email,
+  instagram, kakao_id, google_maps_url, holiday_notice, videos, pricing, faqs,
   cover_image, logo, photos, languages, services, amenities, hours,
   price_level, rating, review_count, verified, featured, latitude, longitude, owner_id,
+  category_id, city_id,
   categories:category_id ( id, name, slug, icon ),
   cities:city_id ( id, name, slug ),
   districts:district_id ( id, name, slug )
@@ -230,6 +232,48 @@ export function businessBySlugQuery(slug: string) {
         .maybeSingle();
       if (error) throw error;
       return data;
+    },
+  });
+}
+
+export function staffByBusinessQuery(businessId: string | undefined) {
+  return queryOptions({
+    queryKey: ["staff", businessId ?? "none"],
+    enabled: !!businessId,
+    queryFn: async () => {
+      if (!businessId) return [];
+      const { data, error } = await supabase
+        .from("staff")
+        .select("id, name, position, photo, languages, sort_order")
+        .eq("business_id", businessId)
+        .order("sort_order")
+        .order("name");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+}
+
+export function nearbyBusinessesQuery(args: {
+  businessId: string;
+  categoryId: string | null;
+  cityId: string | null;
+}) {
+  return queryOptions({
+    queryKey: ["businesses", "nearby", args],
+    queryFn: async () => {
+      let q = supabase
+        .from("businesses")
+        .select(BUSINESS_SELECT)
+        .eq("status", "approved")
+        .neq("id", args.businessId)
+        .order("rating", { ascending: false })
+        .limit(4);
+      if (args.categoryId) q = q.eq("category_id", args.categoryId);
+      if (args.cityId) q = q.eq("city_id", args.cityId);
+      const { data, error } = await q;
+      if (error) throw error;
+      return data ?? [];
     },
   });
 }
