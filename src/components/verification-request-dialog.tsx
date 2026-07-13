@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
+import { uploadVerificationDoc } from "@/lib/storage";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { BadgeCheck, ShieldCheck } from "lucide-react";
+import { BadgeCheck, ShieldCheck, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 
 export function VerificationRequestDialog({
