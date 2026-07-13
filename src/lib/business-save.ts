@@ -146,7 +146,7 @@ export async function loadBusinessForEdit(id: string): Promise<{
     latitude: (data.latitude as number) ?? (undefined as unknown as number),
     longitude: (data.longitude as number) ?? (undefined as unknown as number),
     google_maps_url: data.google_maps_url ?? "",
-    naver_maps_url: "",
+    naver_maps_url: data.naver_maps_url ?? "",
     languages: (data.languages as string[]) ?? ["english"],
     services: (data.services as string[]) ?? [],
     amenities: (data.amenities as string[]) ?? [],
