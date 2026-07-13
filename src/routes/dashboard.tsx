@@ -65,6 +65,7 @@ type OwnedBusiness = {
   name: string;
   slug: string;
   status: string;
+  verified: boolean;
   rating: number;
   review_count: number;
 };
@@ -75,7 +76,7 @@ function MyBusinesses({ userId }: { userId: string }) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("businesses")
-        .select("id, name, slug, status, rating, review_count")
+        .select("id, name, slug, status, verified, rating, review_count")
         .eq("owner_id", userId)
         .order("created_at", { ascending: false });
       if (error) throw error;
