@@ -8,6 +8,7 @@ export interface ReviewRow {
   rating: number;
   title: string | null;
   body: string;
+  photos: string[] | null;
   owner_reply: string | null;
   owner_reply_at: string | null;
   created_at: string;
