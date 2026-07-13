@@ -185,6 +185,13 @@ function BusinessDashboardCard({ business: b }: { business: OwnedBusiness }) {
             </span>
           </div>
         </div>
+        <Link
+          to="/dashboard/business/$id/edit"
+          params={{ id: b.id }}
+          className="inline-flex items-center gap-1 rounded-full border px-4 py-2 text-sm hover:bg-accent"
+        >
+          Edit profile
+        </Link>
       </div>
 
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
