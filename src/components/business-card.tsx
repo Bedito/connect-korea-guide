@@ -51,15 +51,17 @@ export function BusinessCard({ business, size = "md" }: { business: BusinessCard
             </div>
           )}
 
-          <div
-            className={cn(
-              "absolute right-3 top-3 flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium backdrop-blur",
-              open ? "bg-emerald-500/90 text-white" : "bg-background/90 text-muted-foreground",
-            )}
-          >
-            <Clock className="h-3.5 w-3.5" />
-            {open ? "Open now" : "Closed"}
-          </div>
+          {open !== null && (
+            <div
+              className={cn(
+                "absolute right-3 top-3 flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium backdrop-blur",
+                open ? "bg-emerald-500/90 text-white" : "bg-background/90 text-muted-foreground",
+              )}
+            >
+              <Clock className="h-3.5 w-3.5" />
+              {open ? "Open now" : "Closed"}
+            </div>
+          )}
 
           {business.logo && (
             <div className="absolute -bottom-5 left-4 h-12 w-12 overflow-hidden rounded-lg border-2 border-background bg-background shadow-sm">
