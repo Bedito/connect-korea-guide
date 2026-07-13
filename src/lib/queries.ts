@@ -94,11 +94,53 @@ export const recentBusinessesQuery = queryOptions({
   },
 });
 
+export const districtsByCityQuery = (citySlug: string | undefined) =>
+  queryOptions({
+    queryKey: ["districts", citySlug ?? "all"],
+    queryFn: async () => {
+      let q = supabase.from("districts").select("id, name, slug, city_id, cities:city_id(slug)").order("name");
+      const { data, error } = await q;
+      if (error) throw error;
+      if (!citySlug) return data;
+      return (data ?? []).filter((d: { cities: { slug: string } | null }) => d.cities?.slug === citySlug);
+    },
+  });
+
+export type SortKey = "recommended" | "rating" | "reviews" | "newest" | "distance";
+
 export interface BrowseFilters {
   q?: string;
   category?: string;
   city?: string;
-  language?: string;
+  district?: string;
+  languages?: string[];
+  verified?: boolean;
+  openNow?: boolean;
+  parking?: boolean;
+  online?: boolean;
+  emergency?: boolean;
+  reservation?: boolean;
+  sort?: SortKey;
+}
+
+const AMENITY_FLAGS: Record<string, string> = {
+  parking: "parking",
+  online: "online_consultation",
+  emergency: "emergency_service",
+  reservation: "reservation_required",
+};
+
+function isOpenNow(hours: unknown): boolean {
+  if (!hours || typeof hours !== "object") return true;
+  const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  const now = new Date();
+  const key = days[now.getDay()];
+  const h = (hours as Record<string, { open?: string; close?: string; closed?: boolean } | undefined>)[key];
+  if (!h || h.closed || !h.open || !h.close) return false;
+  const cur = now.getHours() * 60 + now.getMinutes();
+  const [oh, om] = h.open.split(":").map(Number);
+  const [ch, cm] = h.close.split(":").map(Number);
+  return cur >= oh * 60 + om && cur <= ch * 60 + cm;
 }
 
 export function browseQuery(filters: BrowseFilters) {
@@ -112,7 +154,7 @@ export function browseQuery(filters: BrowseFilters) {
 
       if (filters.q) {
         query = query.or(
-          `name.ilike.%${filters.q}%,tagline.ilike.%${filters.q}%,description.ilike.%${filters.q}%`,
+          `name.ilike.%${filters.q}%,tagline.ilike.%${filters.q}%,description.ilike.%${filters.q}%,address.ilike.%${filters.q}%`,
         );
       }
       if (filters.category) {
@@ -131,17 +173,50 @@ export function browseQuery(filters: BrowseFilters) {
           .maybeSingle();
         if (c) query = query.eq("city_id", c.id);
       }
-      if (filters.language) {
-        query = query.contains("languages", [filters.language]);
+      if (filters.district) {
+        const { data: d } = await supabase
+          .from("districts")
+          .select("id")
+          .eq("slug", filters.district)
+          .maybeSingle();
+        if (d) query = query.eq("district_id", d.id);
       }
-      query = query.order("featured", { ascending: false }).order("rating", { ascending: false });
+      if (filters.languages && filters.languages.length > 0) {
+        query = query.contains("languages", filters.languages);
+      }
+      if (filters.verified) query = query.eq("verified", true);
+
+      for (const [key, flag] of Object.entries(AMENITY_FLAGS)) {
+        if (filters[key as keyof BrowseFilters]) {
+          query = query.contains("amenities", [flag]);
+        }
+      }
+
+      switch (filters.sort) {
+        case "rating":
+          query = query.order("rating", { ascending: false }).order("review_count", { ascending: false });
+          break;
+        case "reviews":
+          query = query.order("review_count", { ascending: false });
+          break;
+        case "newest":
+          query = query.order("created_at", { ascending: false });
+          break;
+        case "distance":
+        case "recommended":
+        default:
+          query = query.order("featured", { ascending: false }).order("rating", { ascending: false });
+      }
 
       const { data, error } = await query;
       if (error) throw error;
-      return data;
+      let rows = data ?? [];
+      if (filters.openNow) rows = rows.filter((b) => isOpenNow(b.hours));
+      return rows;
     },
   });
 }
+
 
 export function businessBySlugQuery(slug: string) {
   return queryOptions({
