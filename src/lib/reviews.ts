@@ -57,7 +57,7 @@ export function myReviewForBusinessQuery(businessId: string, userId: string | un
       if (!userId) return null;
       const { data, error } = await supabase
         .from("reviews")
-        .select("id, rating, title, body")
+        .select("id, rating, title, body, photos")
         .eq("business_id", businessId)
         .eq("user_id", userId)
         .maybeSingle();
