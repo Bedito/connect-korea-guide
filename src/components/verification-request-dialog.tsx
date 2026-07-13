@@ -32,6 +32,8 @@ export function VerificationRequestDialog({
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [proofUrl, setProofUrl] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
 
   const { data: existing } = useQuery({
     queryKey: ["verification-request", businessId, user?.id],
