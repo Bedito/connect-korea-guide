@@ -166,8 +166,8 @@ export function VerificationRequestDialog({
           <Button variant="ghost" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={() => submit.mutate()} disabled={!user || submit.isPending}>
-            {submit.isPending ? "Submitting..." : "Submit request"}
+          <Button onClick={() => submit.mutate()} disabled={!user || submit.isPending || uploading}>
+            {uploading ? "Uploading..." : submit.isPending ? "Submitting..." : "Submit request"}
           </Button>
         </DialogFooter>
       </DialogContent>
