@@ -104,6 +104,10 @@ function BusinessDetail() {
   });
 
   useEffect(() => {
+    if (b?.id) trackEvent(b.id, "profile_visit");
+  }, [b?.id]);
+
+  useEffect(() => {
     if (!user || !b) return;
     supabase
       .from("favorites")
