@@ -566,7 +566,7 @@ export function PricingSection({
             <Label className="text-xs">Note</Label>
             <Input value={r.description ?? ""} onChange={(e) => update(i, { description: e.target.value })} />
           </div>
-          <Button type="button" variant="ghost" size="icon" onClick={() => remove(i)}>
+          <Button type="button" variant="ghost" size="icon" onClick={() => remove(i)} aria-label="Remove pricing row">
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
@@ -670,7 +670,7 @@ export function StaffSection({
               ))}
             </div>
           </div>
-          <Button type="button" variant="ghost" size="icon" onClick={() => setStaff(staff.filter((_, idx) => idx !== i))}>
+          <Button type="button" variant="ghost" size="icon" onClick={() => setStaff(staff.filter((_, idx) => idx !== i))} aria-label="Remove staff member">
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
