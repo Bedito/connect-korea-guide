@@ -22,7 +22,7 @@ function toBusinessPayload(v: BusinessFormValues, ownerId: string) {
     latitude: lat,
     longitude: lng,
     google_maps_url: clean(v.google_maps_url),
-    // Store naver maps in website slot? We add a separate column via json/website. There's no dedicated column, so we stash in google_maps_url? Better: dedicated field via description. We'll keep naver in website field only if empty? Simpler — reuse a JSON pattern.
+    naver_maps_url: clean(v.naver_maps_url),
     website: clean(v.website),
     phone: clean(v.phone),
     email: clean(v.email),
