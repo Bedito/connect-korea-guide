@@ -9,7 +9,7 @@ const sizeMap: Record<Size, { height: number; markOnly: number }> = {
   xl: { height: 72, markOnly: 72 },
 };
 
-export function LogoMark({ size = 32 }: { size?: number }) {
+export function LogoMark({ size = 40 }: { size?: number }) {
   return (
     <img
       src={logoAsset.url}
