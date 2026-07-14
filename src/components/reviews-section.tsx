@@ -142,6 +142,7 @@ export function ReviewsSection({
             value={title}
             maxLength={120}
             onChange={(e) => setTitle(e.target.value)}
+            aria-label="Review headline"
           />
           <Textarea
             className="mt-3 min-h-28"
@@ -149,6 +150,7 @@ export function ReviewsSection({
             value={body}
             maxLength={2000}
             onChange={(e) => setBody(e.target.value)}
+            aria-label="Review body"
           />
 
           {photos.length > 0 && (

@@ -1,0 +1,14 @@
+# 친구Base
+
+> The verified directory for foreigners in Korea — trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more.
+
+친구Base ("ChinguBase") helps foreigners living in South Korea find trusted local services with verified listings, real reviews, and language-friendly filters.
+
+## Pages
+
+- [Home](/): Overview, featured businesses, popular categories, and city coverage.
+- [Browse services](/browse): Search and filter businesses by category, city, district, language, and services.
+
+## Optional
+
+- [Sitemap](/sitemap.xml): Machine-readable list of all indexable pages.

@@ -40,7 +40,22 @@ export const Route = createFileRoute("/browse")({
         content:
           "Search English-speaking businesses in Korea. Filter by category, city, district, language, and services.",
       },
+      { property: "og:title", content: "Browse trusted services in Korea — 친구Base" },
+      {
+        property: "og:description",
+        content:
+          "Filter verified, English-friendly businesses across Korea by category, city, district and language.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://connect-korea-guide.lovable.app/browse" },
+      { name: "twitter:title", content: "Browse trusted services in Korea — 친구Base" },
+      {
+        name: "twitter:description",
+        content:
+          "Filter verified, English-friendly businesses across Korea by category, city, district and language.",
+      },
     ],
+    links: [{ rel: "canonical", href: "https://connect-korea-guide.lovable.app/browse" }],
   }),
   component: BrowsePage,
 });
@@ -145,6 +160,7 @@ function BrowsePage() {
             defaultValue={search.q ?? ""}
             placeholder="Search businesses, services, keywords..."
             className="border-0 bg-transparent shadow-none focus-visible:ring-0"
+            aria-label="Search businesses"
             onKeyDown={(e) => {
               if (e.key === "Enter") setParam("q", (e.target as HTMLInputElement).value || undefined);
             }}
@@ -159,6 +175,7 @@ function BrowsePage() {
               setParam("district", undefined);
             }}
             className="h-11 min-w-[9rem] bg-transparent text-sm outline-none"
+            aria-label="Filter by city"
           >
             <option value="">Anywhere</option>
             {cities.data?.map((c) => (
@@ -172,6 +189,7 @@ function BrowsePage() {
             onChange={(e) => setParam("district", e.target.value || undefined)}
             disabled={!search.city}
             className="h-11 min-w-[9rem] bg-transparent text-sm outline-none disabled:opacity-50"
+            aria-label="Filter by district"
           >
             <option value="">All districts</option>
             {districts.data?.map((d) => (
@@ -185,6 +203,7 @@ function BrowsePage() {
             value={sortKey}
             onChange={(e) => setParam("sort", e.target.value as SortKey)}
             className="h-11 min-w-[9rem] bg-transparent text-sm outline-none"
+            aria-label="Sort results"
           >
             {SORTS.map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>

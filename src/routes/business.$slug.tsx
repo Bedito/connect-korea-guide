@@ -39,18 +39,54 @@ export const Route = createFileRoute("/business/$slug")({
     if (!data) throw notFound();
     return { business: data };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     if (!loaderData) {
       return { meta: [{ title: "Not found" }, { name: "robots", content: "noindex" }] };
     }
     const b = loaderData.business;
+    const url = `https://connect-korea-guide.lovable.app/business/${params.slug}`;
+    const description = b.tagline ?? b.description?.slice(0, 160) ?? `${b.name} on 친구Base.`;
+    const localBusiness: Record<string, unknown> = {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: b.name,
+      description,
+      url,
+    };
+    if (b.address) localBusiness.address = b.address;
+    if (b.phone) localBusiness.telephone = b.phone;
+    if (b.website) localBusiness.sameAs = [b.website];
+    if (b.cover_image) localBusiness.image = b.cover_image;
+    if (typeof b.rating === "number" && (b.review_count ?? 0) > 0) {
+      localBusiness.aggregateRating = {
+        "@type": "AggregateRating",
+        ratingValue: b.rating,
+        reviewCount: b.review_count,
+      };
+    }
     return {
       meta: [
-        { title: `${b.name} — Connect Korea Guide` },
-        { name: "description", content: b.tagline ?? b.description?.slice(0, 160) ?? "" },
-        { property: "og:title", content: b.name },
-        { property: "og:description", content: b.tagline ?? "" },
-        ...(b.cover_image ? [{ property: "og:image", content: b.cover_image }] : []),
+        { title: `${b.name} — 친구Base` },
+        { name: "description", content: description },
+        { property: "og:title", content: `${b.name} — 친구Base` },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
+        { name: "twitter:title", content: `${b.name} — 친구Base` },
+        { name: "twitter:description", content: description },
+        ...(b.cover_image
+          ? [
+              { property: "og:image", content: b.cover_image },
+              { name: "twitter:image", content: b.cover_image },
+            ]
+          : []),
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(localBusiness),
+        },
       ],
     };
   },

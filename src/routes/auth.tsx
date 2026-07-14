@@ -18,10 +18,15 @@ export const Route = createFileRoute("/auth")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
-      { title: "Sign in — 친구Base" },
-      { name: "description", content: "Sign in or create an account on 친구Base." },
+      { title: "Sign in or create your account — 친구Base" },
+      {
+        name: "description",
+        content:
+          "Sign in to 친구Base to save favorite businesses, leave reviews, and claim your listing — or create a free account in seconds.",
+      },
       { name: "robots", content: "noindex" },
     ],
+    links: [{ rel: "canonical", href: "https://connect-korea-guide.lovable.app/auth" }],
   }),
   component: AuthPage,
 });

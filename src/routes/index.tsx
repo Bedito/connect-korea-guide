@@ -42,6 +42,55 @@ import {
 } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "친구Base — Trusted English-Friendly Services in Korea" },
+      {
+        name: "description",
+        content:
+          "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews.",
+      },
+      { property: "og:title", content: "친구Base — Trusted English-Friendly Services in Korea" },
+      {
+        property: "og:description",
+        content:
+          "The verified directory for foreigners in Korea. Find English-friendly doctors, lawyers, real estate agents, salons and more.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://connect-korea-guide.lovable.app/" },
+    ],
+    links: [{ rel: "canonical", href: "https://connect-korea-guide.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "친구Base",
+              alternateName: "ChinguBase",
+              url: "https://connect-korea-guide.lovable.app/",
+              logo: "https://connect-korea-guide.lovable.app/apple-touch-icon.png",
+            },
+            {
+              "@type": "WebSite",
+              name: "친구Base",
+              url: "https://connect-korea-guide.lovable.app/",
+              description:
+                "The verified directory for foreigners in Korea — trusted, English-friendly local services.",
+              potentialAction: {
+                "@type": "SearchAction",
+                target:
+                  "https://connect-korea-guide.lovable.app/browse?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            },
+          ],
+        }),
+      },
+    ],
+  }),
   component: HomePage,
 });
 
@@ -138,6 +187,7 @@ function HomePage() {
                     onChange={(e) => setQ(e.target.value)}
                     placeholder="Doctor, lawyer, salon…"
                     className="h-6 border-0 bg-transparent px-0 text-sm shadow-none placeholder:text-muted-foreground/70 focus-visible:ring-0"
+                    aria-label="Search services"
                   />
                 </div>
               </div>
