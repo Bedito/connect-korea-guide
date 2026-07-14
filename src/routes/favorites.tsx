@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/favorites")({
   head: () => ({
     meta: [
-      { title: "Your favorites — Seoul Compass" },
+      { title: "Your favorites — 친구Base" },
       { name: "robots", content: "noindex" },
     ],
   }),

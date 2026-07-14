@@ -18,8 +18,8 @@ export const Route = createFileRoute("/auth")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
-      { title: "Sign in — Seoul Compass" },
-      { name: "description", content: "Sign in or create an account on Seoul Compass." },
+      { title: "Sign in — 친구Base" },
+      { name: "description", content: "Sign in or create an account on 친구Base." },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -66,11 +66,8 @@ function AuthPage() {
 
   return (
     <div className="mx-auto flex max-w-md flex-col px-4 py-16 sm:py-24">
-      <Link to="/" className="mx-auto flex items-center gap-2">
-        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
-          <Compass className="h-4 w-4" />
-        </span>
-        <span className="text-display text-2xl">Seoul Compass</span>
+      <Link to="/" aria-label="친구Base home" className="mx-auto">
+        <BrandLogo size="lg" />
       </Link>
 
       <h1 className="text-display mt-10 text-center text-4xl sm:text-5xl">
@@ -161,7 +158,7 @@ function AuthPage() {
       </Button>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
-        {isSignup ? "Already have an account? " : "New to Seoul Compass? "}
+        {isSignup ? "Already have an account? " : "New to 친구Base? "}
         <Link
           to="/auth"
           search={{ mode: isSignup ? "signin" : "signup" }}
