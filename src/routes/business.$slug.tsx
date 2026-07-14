@@ -174,11 +174,10 @@ function BusinessDetail() {
   return (
     <div>
       {/* Cover */}
-      <div className="relative h-[42vh] min-h-[320px] w-full overflow-hidden bg-muted sm:h-[52vh]">
+      <div className="relative h-[200px] w-full overflow-hidden bg-muted sm:h-[320px]">
         {b.cover_image && (
           <img src={b.cover_image} alt={b.name} className="h-full w-full object-cover" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/10 to-transparent" />
         <div className="absolute left-0 top-0 p-4 sm:p-6">
           <Link to="/browse">
             <Button variant="secondary" size="sm" className="rounded-full">
@@ -190,7 +189,8 @@ function BusinessDetail() {
 
       <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="-mt-24 rounded-3xl border border-border/60 bg-card p-6 shadow-sm sm:p-10">
+        <div className="mt-8 rounded-3xl border border-border/60 bg-card p-6 shadow-sm sm:mt-10 sm:p-10">
+
           <div className="flex flex-wrap items-start justify-between gap-6">
             <div className="flex min-w-0 flex-1 items-start gap-5">
               {b.logo && (
@@ -257,17 +257,18 @@ function BusinessDetail() {
               </Button>
             </div>
           </div>
-          {!b.owner_id && (
-            <div className="mt-6 flex items-center justify-between rounded-xl border border-dashed border-border/70 bg-muted/40 px-4 py-3 text-sm">
-              <span className="text-muted-foreground">Do you run this business?</span>
-              <ClaimBusinessDialog businessId={b.id} businessName={b.name} />
-            </div>
-          )}
         </div>
+        {!b.owner_id && (
+          <div className="mt-3 flex items-center justify-between gap-3 px-1 text-xs text-muted-foreground">
+            <span>Do you run this business?</span>
+            <ClaimBusinessDialog businessId={b.id} businessName={b.name} />
+          </div>
+        )}
 
         {/* Body */}
         <div className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
-          <div className="space-y-12">
+          <div className="order-2 space-y-12 lg:order-1">
+
             {/* About */}
             <section>
               <h2 className="text-display text-3xl">About</h2>
@@ -451,7 +452,7 @@ function BusinessDetail() {
           </div>
 
           {/* Sidebar */}
-          <aside className="space-y-4">
+          <aside className="order-1 space-y-4 lg:order-2">
             {/* Contact */}
             <div className="rounded-2xl border border-border/60 bg-card p-6">
               <h3 className="text-display text-xl">Contact & location</h3>
