@@ -206,22 +206,25 @@ function HomePage() {
         />
         {featuredList.length > 0 && (
           <div className="mt-12 grid gap-6 lg:grid-cols-3 lg:grid-rows-2">
-            {/* Hero feature */}
             <FeaturedHero business={featuredList[0]} />
-            {featuredList.slice(1, 4).map((b, i) => (
-              <div
-                key={b.id}
-                className={
-                  i === 0
-                    ? "lg:col-span-2 lg:col-start-2 lg:row-start-1"
-                    : "lg:col-start-" + (i + 1)
-                }
-              >
-                <BusinessCard business={b as never} />
+            {featuredList[1] && (
+              <div className="lg:col-start-2 lg:row-start-1">
+                <BusinessCard business={featuredList[1] as never} />
               </div>
-            ))}
+            )}
+            {featuredList[2] && (
+              <div className="lg:col-start-3 lg:row-start-1">
+                <BusinessCard business={featuredList[2] as never} />
+              </div>
+            )}
+            {featuredList[3] && (
+              <div className="lg:col-span-2 lg:col-start-2 lg:row-start-2">
+                <BusinessCard business={featuredList[3] as never} />
+              </div>
+            )}
           </div>
         )}
+
       </section>
 
       {/* Recently added */}
