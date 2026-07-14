@@ -452,7 +452,7 @@ function BusinessDetail() {
           </div>
 
           {/* Sidebar */}
-          <aside className="space-y-4">
+          <aside className="order-1 space-y-4 lg:order-2">
             {/* Contact */}
             <div className="rounded-2xl border border-border/60 bg-card p-6">
               <h3 className="text-display text-xl">Contact & location</h3>
