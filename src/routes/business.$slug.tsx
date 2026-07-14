@@ -174,11 +174,10 @@ function BusinessDetail() {
   return (
     <div>
       {/* Cover */}
-      <div className="relative h-[42vh] min-h-[320px] w-full overflow-hidden bg-muted sm:h-[52vh]">
+      <div className="relative h-[200px] w-full overflow-hidden bg-muted sm:h-[320px]">
         {b.cover_image && (
           <img src={b.cover_image} alt={b.name} className="h-full w-full object-cover" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-background/10 to-transparent" />
         <div className="absolute left-0 top-0 p-4 sm:p-6">
           <Link to="/browse">
             <Button variant="secondary" size="sm" className="rounded-full">
@@ -190,7 +189,8 @@ function BusinessDetail() {
 
       <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="-mt-24 rounded-3xl border border-border/60 bg-card p-6 shadow-sm sm:p-10">
+        <div className="mt-8 rounded-3xl border border-border/60 bg-card p-6 shadow-sm sm:mt-10 sm:p-10">
+
           <div className="flex flex-wrap items-start justify-between gap-6">
             <div className="flex min-w-0 flex-1 items-start gap-5">
               {b.logo && (
