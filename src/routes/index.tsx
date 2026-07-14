@@ -19,7 +19,7 @@ import {
   Scissors,
   GraduationCap,
   Car,
-  Bluetooth as ToothIcon,
+  Smile as ToothIcon,
   MoreHorizontal,
   type LucideIcon,
 } from "lucide-react";
