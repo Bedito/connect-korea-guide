@@ -18,9 +18,9 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
 
-  --font-serif: "Urbanist", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Epilogue", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -57,7 +57,7 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.875rem;
 
   /* Cloud White + Trust Blue */
   --paper: #ffffff;
@@ -140,9 +140,9 @@
 
 @utility text-display {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.02;
+  line-height: 1.05;
 }
 
 @utility text-eyebrow {
@@ -157,19 +157,29 @@
 @utility shadow-card {
   box-shadow:
     0 1px 2px rgba(17, 24, 39, 0.04),
-    0 1px 3px rgba(17, 24, 39, 0.04);
+    0 2px 6px -2px rgba(17, 24, 39, 0.04);
 }
 
 @utility shadow-elevated {
   box-shadow:
-    0 4px 24px -8px rgba(17, 24, 39, 0.08),
-    0 2px 6px -2px rgba(17, 24, 39, 0.04);
+    0 10px 30px -12px rgba(17, 24, 39, 0.10),
+    0 4px 12px -4px rgba(17, 24, 39, 0.05);
 }
 
 @utility shadow-brand-glow {
   box-shadow:
-    0 10px 30px -12px rgba(37, 99, 235, 0.35),
+    0 12px 32px -12px rgba(37, 99, 235, 0.38),
     0 4px 12px -4px rgba(37, 99, 235, 0.18);
+}
+
+@utility hover-lift {
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 32px -12px rgba(17, 24, 39, 0.12),
+      0 4px 12px -4px rgba(17, 24, 39, 0.06);
+  }
 }
 
 @layer base {
