@@ -54,7 +54,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "The verified directory for foreigners in Korea. Find English-friendly doctors, lawyers, real estate agents, salons and more.",
+          "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://connect-korea-guide.lovable.app/" },
