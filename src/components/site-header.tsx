@@ -32,8 +32,8 @@ export function SiteHeader() {
 
         <nav className="hidden items-center gap-1 md:flex">
           <NavLink to="/browse">Browse</NavLink>
-          <NavLink to="/browse" params={{ category: "restaurants" }}>
-            Restaurants
+          <NavLink to="/browse" params={{ category: "Beauty & Wellness" }}>
+            Beauty Clinics
           </NavLink>
           <NavLink to="/browse" params={{ category: "doctors" }}>
             Healthcare
@@ -96,7 +96,7 @@ export function SiteHeader() {
               </Link>
               <Link to="/auth" search={{ mode: "signup" }}>
                 <Button size="sm" className="font-medium shadow-brand-glow">
-                  Get started
+                  Become a Partner
                 </Button>
               </Link>
             </>
@@ -111,7 +111,7 @@ function NavLink({
   to,
   params,
   children,
-}: {
+}: {git pull
   to: string;
   params?: { category: string };
   children: React.ReactNode;
