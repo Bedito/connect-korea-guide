@@ -78,18 +78,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Find English-speaking businesses across South Korea — verified, reviewed, and made for expats.",
+          "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews.",
       },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://connect-korea-guide.lovable.app/__l5e/assets-v1/199666d0-7f98-43a7-9046-b2033a88b885/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "친구Base — Trusted English-Friendly Services in Korea" },
-      { name: "twitter:description", content: "Find English-speaking businesses across South Korea — verified, reviewed, and made for expats." },
+      { name: "twitter:description", content: "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews." },
       { name: "twitter:image", content: "https://connect-korea-guide.lovable.app/__l5e/assets-v1/199666d0-7f98-43a7-9046-b2033a88b885/og-image.jpg" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
