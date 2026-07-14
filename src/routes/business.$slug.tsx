@@ -257,17 +257,18 @@ function BusinessDetail() {
               </Button>
             </div>
           </div>
-          {!b.owner_id && (
-            <div className="mt-6 flex items-center justify-between rounded-xl border border-dashed border-border/70 bg-muted/40 px-4 py-3 text-sm">
-              <span className="text-muted-foreground">Do you run this business?</span>
-              <ClaimBusinessDialog businessId={b.id} businessName={b.name} />
-            </div>
-          )}
         </div>
+        {!b.owner_id && (
+          <div className="mt-3 flex items-center justify-between gap-3 px-1 text-xs text-muted-foreground">
+            <span>Do you run this business?</span>
+            <ClaimBusinessDialog businessId={b.id} businessName={b.name} />
+          </div>
+        )}
 
         {/* Body */}
         <div className="mt-10 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
-          <div className="space-y-12">
+          <div className="order-2 space-y-12 lg:order-1">
+
             {/* About */}
             <section>
               <h2 className="text-display text-3xl">About</h2>
