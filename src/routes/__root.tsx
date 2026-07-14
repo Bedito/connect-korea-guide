@@ -65,15 +65,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#2563eb" },
       { title: "친구Base — Trusted English-Friendly Services in Korea" },
       {
         name: "description",
         content:
           "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews.",
       },
-      { name: "author", content: "친구Base" },
-      { property: "og:site_name", content: "친구Base" },
+      { name: "author", content: "Seoul Compass" },
       { property: "og:title", content: "친구Base — Trusted English-Friendly Services in Korea" },
       {
         property: "og:description",
@@ -81,20 +79,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://connect-korea-guide.lovable.app/__l5e/assets-v1/199666d0-7f98-43a7-9046-b2033a88b885/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "친구Base — Trusted English-Friendly Services in Korea" },
+      { name: "description", content: "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews." },
+      { property: "og:description", content: "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews." },
       { name: "twitter:description", content: "친구Base connects foreigners in Korea with trusted, English-friendly doctors, dentists, real estate agents, lawyers, salons and more. Verified listings, real reviews." },
-      { name: "twitter:image", content: "https://connect-korea-guide.lovable.app/__l5e/assets-v1/199666d0-7f98-43a7-9046-b2033a88b885/og-image.jpg" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/841d8501-457c-4568-b50e-04a54f098357/id-preview-f9131d5d--42e1e024-17af-4b20-82f3-3e625f16619f.lovable.app-1783412146550.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/841d8501-457c-4568-b50e-04a54f098357/id-preview-f9131d5d--42e1e024-17af-4b20-82f3-3e625f16619f.lovable.app-1783412146550.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600;700&display=swap",
       },
     ],
   }),
