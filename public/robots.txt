@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /auth
 Disallow: /favorites
+Disallow: /admin
+Disallow: /dashboard
+
+Sitemap: https://connect-korea-guide.lovable.app/sitemap.xml

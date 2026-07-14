@@ -138,6 +138,7 @@ function HomePage() {
                     onChange={(e) => setQ(e.target.value)}
                     placeholder="Doctor, lawyer, salon…"
                     className="h-6 border-0 bg-transparent px-0 text-sm shadow-none placeholder:text-muted-foreground/70 focus-visible:ring-0"
+                    aria-label="Search services"
                   />
                 </div>
               </div>
