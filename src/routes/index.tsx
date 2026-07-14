@@ -684,12 +684,12 @@ const WHY_ITEMS = [
 ] as const;
 
 const CITY_IMAGES: Record<string, string> = {
-  seoul: "",
-  busan: "",
+  seoul: "https://image.spread.ai/v1/f/581a533b-82a8-48b8-b7ae-244e45853549/Seoul_N_Tower_Modern_City.png",
+  busan: "https://image.spread.ai/v1/f/723c3b06-444c-474d-9d41-3a8302f3069b/Busan_Marine_City.png",
   incheon: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&q=80",
   daegu: "https://images.unsplash.com/photo-1546874177-9e664107314e?w=800&q=80",
-  daejeon: "",
-  gwangju: "",
+  daejeon: "https://image.spread.ai/v1/f/d9a3b9f3-855c-43f1-b841-3a055d0a6c0e/Daejeon_Expo_Bridge_Modern.png",
+  gwangju: "https://image.spread.ai/v1/f/209c1544-e22f-410a-b333-d73105777a06/Gwangju_Cityscape_Traditional.png",
   jeju: "",
 };
 
