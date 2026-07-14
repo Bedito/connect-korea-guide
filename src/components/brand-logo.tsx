@@ -3,13 +3,13 @@ import logoAsset from "@/assets/friendbase-logo.png.asset.json";
 type Size = "sm" | "md" | "lg" | "xl";
 
 const sizeMap: Record<Size, { height: number; markOnly: number }> = {
-  sm: { height: 22, markOnly: 24 },
-  md: { height: 30, markOnly: 32 },
-  lg: { height: 40, markOnly: 40 },
-  xl: { height: 56, markOnly: 56 },
+  sm: { height: 28, markOnly: 30 },
+  md: { height: 38, markOnly: 40 },
+  lg: { height: 52, markOnly: 52 },
+  xl: { height: 72, markOnly: 72 },
 };
 
-export function LogoMark({ size = 32 }: { size?: number }) {
+export function LogoMark({ size = 40 }: { size?: number }) {
   return (
     <img
       src={logoAsset.url}
