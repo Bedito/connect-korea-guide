@@ -684,13 +684,15 @@ const WHY_ITEMS = [
 ] as const;
 
 const CITY_IMAGES: Record<string, string> = {
-  seoul: "https://images.unsplash.com/photo-1538485399081-7c8ed7d6f5df?w=800&q=80",
-  busan: "https://images.unsplash.com/photo-1601733036253-f6a924e94918?w=800&q=80",
+  seoul: "https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=800&q=80",
+  busan: "https://media.istockphoto.com/id/1167692298/photo/gwangan-bridge-at-night-in-busan-city-south-korea.jpg?",
   incheon: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&q=80",
   daegu: "https://images.unsplash.com/photo-1546874177-9e664107314e?w=800&q=80",
   daejeon: "https://images.unsplash.com/photo-1595528862909-f16bfcbd0a5f?w=800&q=80",
-  gwangju: "https://images.unsplash.com/photo-1517244683847-7456b63c5969?w=800&q=80",
-  jeju: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80",
+  gwangju: "https://tour.gwangju.go.kr/uploads/tour/info/culture/202007171040012580.jpg",
+  jeju: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80
+
+",
 };
 
 const CITY_FALLBACKS = [
