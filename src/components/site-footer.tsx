@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Sparkles, Github, Twitter } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 export function SiteFooter() {
   return (
@@ -7,13 +8,8 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Link to="/" className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-brand-glow">
-                <Sparkles className="h-4 w-4" strokeWidth={2.5} />
-              </span>
-              <span className="font-display text-[1.05rem] font-bold tracking-tight">
-                Seoul Compass
-              </span>
+            <Link to="/" aria-label="친구Base home">
+              <BrandLogo size="md" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
               A trusted marketplace of English-friendly businesses across South Korea. Built for the
@@ -75,7 +71,7 @@ export function SiteFooter() {
           </FooterCol>
         </div>
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-border/70 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} Seoul Compass. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} 친구Base. All rights reserved.</span>
           <span>Made with care for the expat community in Korea.</span>
         </div>
       </div>
