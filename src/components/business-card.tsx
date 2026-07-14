@@ -30,7 +30,7 @@ export function BusinessCard({ business, size = "md" }: { business: BusinessCard
   return (
     <div className="group flex flex-col">
       <Link to="/business/$slug" params={{ slug: business.slug }} className="block">
-        <div className={cn("relative overflow-hidden rounded-xl bg-muted", aspect)}>
+        <div className={cn("relative overflow-hidden rounded-2xl bg-muted transition-all duration-300 group-hover:shadow-elevated", aspect)}>
           {business.cover_image ? (
             <img
               src={business.cover_image}
