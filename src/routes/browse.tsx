@@ -34,7 +34,7 @@ export const Route = createFileRoute("/browse")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
-      { title: "Browse services — Seoul Compass" },
+      { title: "Browse services — 친구Base" },
       {
         name: "description",
         content:

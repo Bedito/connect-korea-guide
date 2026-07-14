@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Heart, Search, User, LogOut, LayoutDashboard, Shield, Sparkles } from "lucide-react";
+import { Heart, Search, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
 import { useIsAdmin } from "@/lib/roles";
@@ -25,13 +26,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2.5">
-          <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-brand-glow">
-            <Sparkles className="h-4 w-4" strokeWidth={2.5} />
-          </span>
-          <span className="font-display text-[1.05rem] font-bold tracking-tight text-foreground">
-            Seoul Compass
-          </span>
+        <Link to="/" aria-label="친구Base home">
+          <BrandLogo size="md" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
