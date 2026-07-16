@@ -1,3 +1,8 @@
+import seoulImg from "@/assets/seoul.jpg";
+import busanImg from "@/assets/busan.jpg";
+import daejeonImg from "@/assets/daejon.jpg";
+import gwangjuImg from "@/assets/gwangju.jpg";
+import jejuImg from "@/assets/jeju.jpg";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -675,13 +680,13 @@ const WHY_ITEMS = [
 ] as const;
 
 const CITY_IMAGES: Record<string, string> = {
-  seoul: "/assets/seoul.jpg",
-  busan: "/assets/busan.jpg",
+  seoul: seoulImg,
+  busan: busanImg,
   incheon: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&q=80",
   daegu: "https://images.unsplash.com/photo-1546874177-9e664107314e?w=800&q=80",
-  daejeon: "/assets/daejon.jpg",
-  gwangju: "/assets/gwangju.jpg",
-  jeju: "/assets/jeju.jpg",
+  daejeon: daejeonImg,
+  gwangju: gwangjuImg,
+  jeju: jejuImg,
 };
 
 const CITY_FALLBACKS = [
