@@ -523,6 +523,7 @@ function PremiumBusinessCard({
     districts?: { name: string } | null;
   };
 }) {
+  const { t } = useTranslation();
   const open = useOpenNow(business.hours);
   const qc = useQueryClient();
   const [saved, setSaved] = useState(false);
@@ -535,7 +536,7 @@ function PremiumBusinessCard({
     e.stopPropagation();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast("Please sign in to save favorites.");
+      toast(t("business.signInToSave"));
       return;
     }
     if (saved) {
@@ -544,7 +545,7 @@ function PremiumBusinessCard({
     } else {
       await supabase.from("favorites").insert({ user_id: user.id, business_id: business.id });
       setSaved(true);
-      toast.success("Saved");
+      toast.success(t("business.saved"));
     }
     qc.invalidateQueries({ queryKey: ["favorites"] });
   };
@@ -569,7 +570,7 @@ function PremiumBusinessCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-            No image
+            {t("business.noImage")}
           </div>
         )}
 
@@ -577,7 +578,7 @@ function PremiumBusinessCard({
         {business.verified && (
           <div className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm backdrop-blur">
             <BadgeCheck className="h-3.5 w-3.5" />
-            Verified
+            {t("business.verified")}
           </div>
         )}
 
@@ -585,7 +586,7 @@ function PremiumBusinessCard({
         <button
           type="button"
           onClick={toggleSave}
-          aria-label={saved ? "Remove bookmark" : "Save"}
+          aria-label={saved ? t("business.removeBookmark") : t("business.save")}
           className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-foreground shadow-sm backdrop-blur transition-all duration-200 hover:scale-110 hover:text-primary"
         >
           <Bookmark
@@ -637,7 +638,7 @@ function PremiumBusinessCard({
           {hasEnglish && (
             <span className="inline-flex items-center gap-1 rounded-full bg-primary/8 px-2.5 py-1 text-[11px] font-medium text-primary">
               <Languages className="h-3 w-3" />
-              English available
+              {t("business.englishAvailable")}
             </span>
           )}
           {open !== null && (
@@ -650,7 +651,7 @@ function PremiumBusinessCard({
               )}
             >
               <Clock className="h-3 w-3" />
-              {open ? "Open now" : "Closed"}
+              {open ? t("business.openNow") : t("business.closed")}
             </span>
           )}
         </div>
