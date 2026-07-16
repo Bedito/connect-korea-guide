@@ -95,26 +95,27 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const POPULAR_CATEGORIES: { label: string; slug: string; icon: LucideIcon }[] = [
-  { label: "Medical", slug: "doctors", icon: Stethoscope },
-  { label: "Dental", slug: "dentists", icon: ToothIcon },
-  { label: "Legal", slug: "lawyers", icon: Scale },
-  { label: "Real Estate", slug: "real-estate", icon: Home },
-  { label: "Accounting", slug: "accountants", icon: Calculator },
-  { label: "Beauty", slug: "beauty", icon: Scissors },
-  { label: "Education", slug: "schools", icon: GraduationCap },
-  { label: "Automotive", slug: "auto-repair", icon: Car },
+const POPULAR_CATEGORIES: { labelKey: string; slug: string; icon: LucideIcon }[] = [
+  { labelKey: "categories.medical", slug: "doctors", icon: Stethoscope },
+  { labelKey: "categories.dental", slug: "dentists", icon: ToothIcon },
+  { labelKey: "categories.legal", slug: "lawyers", icon: Scale },
+  { labelKey: "categories.realEstate", slug: "real-estate", icon: Home },
+  { labelKey: "categories.accounting", slug: "accountants", icon: Calculator },
+  { labelKey: "categories.beauty", slug: "beauty", icon: Scissors },
+  { labelKey: "categories.education", slug: "schools", icon: GraduationCap },
+  { labelKey: "categories.automotive", slug: "auto-repair", icon: Car },
 ];
 
-const POPULAR_CHIPS = [
-  "English dentist in Gangnam",
-  "Real estate near Hongdae",
-  "Immigration lawyer",
-  "Vet in Busan",
-  "International school",
+const POPULAR_CHIP_KEYS = [
+  "home.chips.dentistGangnam",
+  "home.chips.realEstateHongdae",
+  "home.chips.immigrationLawyer",
+  "home.chips.vetBusan",
+  "home.chips.internationalSchool",
 ];
 
 function HomePage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [city, setCity] = useState("");
