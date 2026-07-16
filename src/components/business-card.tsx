@@ -28,7 +28,7 @@ export function BusinessCard({ business, size = "md" }: { business: BusinessCard
   const open = useOpenNow(business.hours);
 
   return (
-    <div className="group flex flex-col">
+    <div className="group flex h-full flex-col">
       <Link to="/business/$slug" params={{ slug: business.slug }} className="block">
         <div className={cn("relative overflow-hidden rounded-2xl bg-muted transition-all duration-300 group-hover:shadow-elevated", aspect)}>
           {business.cover_image ? (
@@ -71,10 +71,12 @@ export function BusinessCard({ business, size = "md" }: { business: BusinessCard
         </div>
       </Link>
 
-      <div className={cn("mt-3 space-y-1.5", business.logo && "pl-16 -mt-2 min-h-[3.5rem] pt-2")}>
+      <div className={cn(
+          "mt-3 flex flex-1 flex-col gap-2", business.logo && "pl-16 -mt-2 min-h-[3.5rem] pt-2"
+          )}>
         <div className="flex items-start justify-between gap-3">
           <Link to="/business/$slug" params={{ slug: business.slug }}>
-            <h3 className="text-display text-xl leading-tight hover:underline">{business.name}</h3>
+            <h3 className="line-clamp-2 min-h-[3.5rem] text-display text-xl leading-tight hover:underline">{business.name}</h3>
           </Link>
           <div className="flex shrink-0 items-center gap-1 text-sm">
             <Star className="h-3.5 w-3.5 fill-foreground text-foreground" />
@@ -116,7 +118,7 @@ export function BusinessCard({ business, size = "md" }: { business: BusinessCard
           )}
         </div>
 
-        <div className="pt-3">
+        <div className="mt-auto pt-4">
           <Button asChild size="sm" variant="outline" className="w-full">
             <Link to="/business/$slug" params={{ slug: business.slug }}>
               View Details

@@ -327,7 +327,7 @@ function HomePage() {
       {/* Recently added */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeader eyebrow={t("home.newEyebrow")} title={t("home.newTitle")} />
-        <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid auto-rows-fr gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {recent.data?.slice(0, 4).map((b) => (
             <BusinessCard key={b.id} business={b as never} />
           ))}
@@ -341,7 +341,7 @@ function HomePage() {
           title={t("home.topTitle")}
           action={{ label: t("home.seeAll"), to: "/browse" }}
         />
-        <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid auto-rows-fr gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {topRated.data?.slice(0, 4).map((b) => (
             <BusinessCard key={b.id} business={b as never} />
           ))}
