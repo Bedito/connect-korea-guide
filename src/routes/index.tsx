@@ -307,10 +307,10 @@ function HomePage() {
       {/* Featured — premium cards */}
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Featured"
-          title="Handpicked businesses"
-          description="Editor-curated favorites across Korea, from independent studios to trusted specialists."
-          action={{ label: "Explore all", to: "/browse" }}
+          eyebrow={t("home.featuredEyebrow")}
+          title={t("home.featuredTitle")}
+          description={t("home.featuredDesc")}
+          action={{ label: t("home.exploreAll"), to: "/browse" }}
         />
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {featuredList.map((b) => (
@@ -321,7 +321,7 @@ function HomePage() {
 
       {/* Recently added */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <SectionHeader eyebrow="New" title="Recently added" />
+        <SectionHeader eyebrow={t("home.newEyebrow")} title={t("home.newTitle")} />
         <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {recent.data?.slice(0, 4).map((b) => (
             <BusinessCard key={b.id} business={b as never} />
@@ -332,9 +332,9 @@ function HomePage() {
       {/* Top Rated */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Highest rated"
-          title="Top rated in Korea"
-          action={{ label: "See all", to: "/browse" }}
+          eyebrow={t("home.topEyebrow")}
+          title={t("home.topTitle")}
+          action={{ label: t("home.seeAll"), to: "/browse" }}
         />
         <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {topRated.data?.slice(0, 4).map((b) => (
@@ -345,7 +345,7 @@ function HomePage() {
 
       {/* Browse by City */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <SectionHeader eyebrow="Locations" title="Browse by city" />
+        <SectionHeader eyebrow={t("home.locationsEyebrow")} title={t("home.locationsTitle")} />
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {cityCounts.data?.map((c, i) => (
             <Link
@@ -366,7 +366,7 @@ function HomePage() {
                 <div>
                   <h3 className="font-display text-lg font-semibold tracking-tight">{c.name}</h3>
                   <p className="mt-0.5 text-xs text-muted-foreground">
-                    {c.count} {c.count === 1 ? "listing" : "listings"}
+                    {c.count} {c.count === 1 ? t("home.listing") : t("home.listings")}
                   </p>
                 </div>
                 <ArrowUpRight className="h-4 w-4 text-muted-foreground transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
@@ -380,35 +380,34 @@ function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
           <div className="rounded-[24px] border border-border bg-card p-10 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
-            <span className="text-eyebrow">Why us</span>
+            <span className="text-eyebrow">{t("home.whyEyebrow")}</span>
             <h2 className="mt-3 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.03em] sm:text-5xl">
-              Built for the international community in Korea.
+              {t("home.whyTitle")}
             </h2>
             <p className="mt-4 max-w-md text-muted-foreground">
-              Every listing is vetted for language access, transparency, and expat friendliness — so
-              you can book with confidence.
+              {t("home.whyDesc")}
             </p>
             <Link
               to="/browse"
               className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover"
             >
-              Start browsing <ArrowRight className="h-3.5 w-3.5" />
+              {t("home.startBrowsing")} <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {WHY_ITEMS.map((item) => (
               <div
-                key={item.title}
+                key={item.titleKey}
                 className="rounded-[18px] border border-border bg-card p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.2)]"
               >
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/5 text-primary">
                   <item.icon strokeWidth={1.5} className="h-5 w-5" />
                 </span>
                 <h3 className="mt-4 font-display text-lg font-semibold tracking-tight">
-                  {item.title}
+                  {t(item.titleKey)}
                 </h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  {item.description}
+                  {t(item.descKey)}
                 </p>
               </div>
             ))}
@@ -430,14 +429,13 @@ function HomePage() {
           <div className="relative grid gap-8 p-10 sm:p-14 md:grid-cols-[1.4fr_1fr] md:items-center">
             <div>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-background/20 bg-background/10 px-2.5 py-1 text-xs font-medium backdrop-blur">
-                <Sparkles className="h-3 w-3" /> For business owners
+                <Sparkles className="h-3 w-3" /> {t("home.ctaTag")}
               </span>
               <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.03em] sm:text-5xl">
-                Get discovered by Korea's international community.
+                {t("home.ctaTitle")}
               </h2>
               <p className="mt-4 max-w-lg text-background/70">
-                List your business, respond to reviews, and reach thousands of foreigners searching
-                for English-friendly services every month.
+                {t("home.ctaDesc")}
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col md:items-end">
@@ -446,7 +444,7 @@ function HomePage() {
                   size="lg"
                   className="w-full bg-primary text-primary-foreground shadow-brand-glow hover:bg-primary-hover sm:w-auto"
                 >
-                  List your business
+                  {t("home.listBusiness")}
                 </Button>
               </Link>
               <Link to="/dashboard">
@@ -455,13 +453,14 @@ function HomePage() {
                   variant="ghost"
                   className="w-full text-background hover:bg-background/10 sm:w-auto"
                 >
-                  Business dashboard
+                  {t("home.businessDashboard")}
                 </Button>
               </Link>
             </div>
           </div>
         </div>
       </section>
+
     </div>
   );
 }
