@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Github, Twitter } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { BrandLogo } from "@/components/brand-logo";
 
 export function SiteFooter() {
+  const { t } = useTranslation();
   return (
     <footer className="mt-24 border-t border-border/70 bg-background">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -12,8 +14,7 @@ export function SiteFooter() {
               <BrandLogo size="md" />
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              A trusted marketplace of English-friendly businesses across South Korea. Built for the
-              international community.
+              {t("footer.tagline")}
             </p>
             <div className="mt-6 flex items-center gap-2">
               <a
@@ -32,47 +33,47 @@ export function SiteFooter() {
               </a>
             </div>
           </div>
-          <FooterCol title="Discover">
-            <FooterLink to="/browse">Browse all</FooterLink>
+          <FooterCol title={t("footer.discover")}>
+            <FooterLink to="/browse">{t("footer.browseAll")}</FooterLink>
             <FooterLink to="/browse" cat="doctors">
-              Doctors
+              {t("footer.doctors")}
             </FooterLink>
             <FooterLink to="/browse" cat="real-estate">
-              Real estate
+              {t("footer.realEstate")}
             </FooterLink>
             <FooterLink to="/browse" cat="restaurants">
-              Restaurants
+              {t("footer.restaurants")}
             </FooterLink>
           </FooterCol>
-          <FooterCol title="For businesses">
+          <FooterCol title={t("footer.forBusinesses")}>
             <li>
               <Link to="/auth" search={{ mode: "signup" }} className="hover:text-foreground">
-                List your business
+                {t("footer.listYourBusiness")}
               </Link>
             </li>
             <li>
               <Link to="/dashboard" className="hover:text-foreground">
-                Business dashboard
+                {t("footer.businessDashboard")}
               </Link>
             </li>
-            <li className="opacity-70">Featured placement</li>
+            <li className="opacity-70">{t("footer.featuredPlacement")}</li>
           </FooterCol>
-          <FooterCol title="Account">
+          <FooterCol title={t("footer.account")}>
             <li>
               <Link to="/auth" className="hover:text-foreground">
-                Sign in
+                {t("footer.signIn")}
               </Link>
             </li>
             <li>
               <Link to="/favorites" className="hover:text-foreground">
-                Favorites
+                {t("footer.favorites")}
               </Link>
             </li>
           </FooterCol>
         </div>
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-border/70 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} 친구Base. All rights reserved.</span>
-          <span>Made with care for the expat community in Korea.</span>
+          <span>© {new Date().getFullYear()} 친구Base. {t("footer.rights")}</span>
+          <span>{t("footer.madeWith")}</span>
         </div>
       </div>
     </footer>

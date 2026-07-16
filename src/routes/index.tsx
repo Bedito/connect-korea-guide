@@ -24,6 +24,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BusinessCard } from "@/components/business-card";
@@ -94,26 +95,27 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const POPULAR_CATEGORIES: { label: string; slug: string; icon: LucideIcon }[] = [
-  { label: "Medical", slug: "doctors", icon: Stethoscope },
-  { label: "Dental", slug: "dentists", icon: ToothIcon },
-  { label: "Legal", slug: "lawyers", icon: Scale },
-  { label: "Real Estate", slug: "real-estate", icon: Home },
-  { label: "Accounting", slug: "accountants", icon: Calculator },
-  { label: "Beauty", slug: "beauty", icon: Scissors },
-  { label: "Education", slug: "schools", icon: GraduationCap },
-  { label: "Automotive", slug: "auto-repair", icon: Car },
+const POPULAR_CATEGORIES: { labelKey: string; slug: string; icon: LucideIcon }[] = [
+  { labelKey: "categories.medical", slug: "doctors", icon: Stethoscope },
+  { labelKey: "categories.dental", slug: "dentists", icon: ToothIcon },
+  { labelKey: "categories.legal", slug: "lawyers", icon: Scale },
+  { labelKey: "categories.realEstate", slug: "real-estate", icon: Home },
+  { labelKey: "categories.accounting", slug: "accountants", icon: Calculator },
+  { labelKey: "categories.beauty", slug: "beauty", icon: Scissors },
+  { labelKey: "categories.education", slug: "schools", icon: GraduationCap },
+  { labelKey: "categories.automotive", slug: "auto-repair", icon: Car },
 ];
 
-const POPULAR_CHIPS = [
-  "English dentist in Gangnam",
-  "Real estate near Hongdae",
-  "Immigration lawyer",
-  "Vet in Busan",
-  "International school",
+const POPULAR_CHIP_KEYS = [
+  "home.chips.dentistGangnam",
+  "home.chips.realEstateHongdae",
+  "home.chips.immigrationLawyer",
+  "home.chips.vetBusan",
+  "home.chips.internationalSchool",
 ];
 
 function HomePage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [city, setCity] = useState("");
@@ -157,18 +159,16 @@ function HomePage() {
           <div className="mx-auto max-w-4xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
               <ShieldCheck className="h-3.5 w-3.5" />
-              Trusted by Korea's international community
+              {t("home.trustBadge")}
             </span>
 
             <h1 className="mt-8 font-display text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-foreground sm:text-6xl md:text-[5.5rem]">
-              Find trusted services
+              {t("home.headlineA")}
               <br />
-              in Korea, <span className="text-primary">in your language.</span>
+              {t("home.headlineB")} <span className="text-primary">{t("home.headlineC")}</span>
             </h1>
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              The verified directory for foreigners living in Korea — doctors, lawyers,
-              real estate, salons and more, all confirmed English-friendly and reviewed
-              by the community.
+              {t("home.subtitle")}
             </p>
 
             {/* Floating Airbnb-style search box */}
@@ -180,14 +180,14 @@ function HomePage() {
                 <Search className="h-5 w-5 shrink-0 text-primary" />
                 <div className="flex-1 text-left">
                   <label className="block text-[11px] font-semibold uppercase tracking-wider text-foreground/70">
-                    Search
+                    {t("home.searchLabel")}
                   </label>
                   <Input
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
-                    placeholder="Doctor, lawyer, salon…"
+                    placeholder={t("home.searchPlaceholder")}
                     className="h-6 border-0 bg-transparent px-0 text-sm shadow-none placeholder:text-muted-foreground/70 focus-visible:ring-0"
-                    aria-label="Search services"
+                    aria-label={t("home.searchLabel")}
                   />
                 </div>
               </div>
@@ -198,15 +198,15 @@ function HomePage() {
                 <MapPin className="h-5 w-5 shrink-0 text-primary" />
                 <div className="flex-1 text-left">
                   <label className="block text-[11px] font-semibold uppercase tracking-wider text-foreground/70">
-                    Location
+                    {t("home.locationLabel")}
                   </label>
                   <select
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     className="h-6 w-full bg-transparent text-sm text-foreground outline-none"
-                    aria-label="Location"
+                    aria-label={t("home.locationLabel")}
                   >
-                    <option value="">Anywhere in Korea</option>
+                    <option value="">{t("home.anywhere")}</option>
                     {cities.data?.map((c) => (
                       <option key={c.id} value={c.slug}>
                         {c.name}
@@ -222,25 +222,28 @@ function HomePage() {
                 className="h-14 gap-2 rounded-[18px] px-8 text-base font-semibold shadow-brand-glow md:rounded-full"
               >
                 <Search className="h-4 w-4" />
-                Search
+                {t("home.searchBtn")}
               </Button>
             </form>
 
             {/* Popular chips */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Popular
+                {t("home.popular")}
               </span>
-              {POPULAR_CHIPS.map((ex) => (
-                <button
-                  key={ex}
-                  type="button"
-                  onClick={() => navigate({ to: "/browse", search: { q: ex } })}
-                  className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground/80 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-md"
-                >
-                  {ex}
-                </button>
-              ))}
+              {POPULAR_CHIP_KEYS.map((key) => {
+                const label = t(key);
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => navigate({ to: "/browse", search: { q: label } })}
+                    className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground/80 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-md"
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -249,33 +252,36 @@ function HomePage() {
       {/* Category cards */}
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Browse"
-          title="What are you looking for?"
-          description="Nine essential categories, curated for the international community in Korea."
+          eyebrow={t("home.browseEyebrow")}
+          title={t("home.browseTitle")}
+          description={t("home.browseDesc")}
         />
 
         <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-          {POPULAR_CATEGORIES.map((cat) => (
-            <Link
-              key={cat.slug}
-              to="/browse"
-              search={{ category: cat.slug }}
-              className="group flex items-center gap-5 rounded-[18px] border border-border/70 bg-card p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.25)]"
-            >
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/5 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                <cat.icon strokeWidth={1.5} className="h-7 w-7" />
-              </span>
-              <div className="flex-1">
-                <div className="font-display text-lg font-semibold tracking-tight text-foreground">
-                  {cat.label}
+          {POPULAR_CATEGORIES.map((cat) => {
+            const label = t(cat.labelKey);
+            return (
+              <Link
+                key={cat.slug}
+                to="/browse"
+                search={{ category: cat.slug }}
+                className="group flex items-center gap-5 rounded-[18px] border border-border/70 bg-card p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.25)]"
+              >
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/5 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+                  <cat.icon strokeWidth={1.5} className="h-7 w-7" />
+                </span>
+                <div className="flex-1">
+                  <div className="font-display text-lg font-semibold tracking-tight text-foreground">
+                    {label}
+                  </div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">
+                    {t("home.explore")} {label.toLowerCase()}
+                  </div>
                 </div>
-                <div className="mt-0.5 text-xs text-muted-foreground">
-                  Explore {cat.label.toLowerCase()}
-                </div>
-              </div>
-              <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
-            </Link>
-          ))}
+                <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+              </Link>
+            );
+          })}
 
           <Link
             to="/browse"
@@ -286,10 +292,10 @@ function HomePage() {
             </span>
             <div className="flex-1">
               <div className="font-display text-lg font-semibold tracking-tight text-foreground">
-                More
+                {t("home.more")}
               </div>
               <div className="mt-0.5 text-xs text-muted-foreground">
-                See all categories
+                {t("home.seeAllCategories")}
               </div>
             </div>
             <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
@@ -297,13 +303,14 @@ function HomePage() {
         </div>
       </section>
 
+
       {/* Featured — premium cards */}
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Featured"
-          title="Handpicked businesses"
-          description="Editor-curated favorites across Korea, from independent studios to trusted specialists."
-          action={{ label: "Explore all", to: "/browse" }}
+          eyebrow={t("home.featuredEyebrow")}
+          title={t("home.featuredTitle")}
+          description={t("home.featuredDesc")}
+          action={{ label: t("home.exploreAll"), to: "/browse" }}
         />
         <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {featuredList.map((b) => (
@@ -314,7 +321,7 @@ function HomePage() {
 
       {/* Recently added */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <SectionHeader eyebrow="New" title="Recently added" />
+        <SectionHeader eyebrow={t("home.newEyebrow")} title={t("home.newTitle")} />
         <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {recent.data?.slice(0, 4).map((b) => (
             <BusinessCard key={b.id} business={b as never} />
@@ -325,9 +332,9 @@ function HomePage() {
       {/* Top Rated */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Highest rated"
-          title="Top rated in Korea"
-          action={{ label: "See all", to: "/browse" }}
+          eyebrow={t("home.topEyebrow")}
+          title={t("home.topTitle")}
+          action={{ label: t("home.seeAll"), to: "/browse" }}
         />
         <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {topRated.data?.slice(0, 4).map((b) => (
@@ -338,7 +345,7 @@ function HomePage() {
 
       {/* Browse by City */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <SectionHeader eyebrow="Locations" title="Browse by city" />
+        <SectionHeader eyebrow={t("home.locationsEyebrow")} title={t("home.locationsTitle")} />
         <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {cityCounts.data?.map((c, i) => (
             <Link
@@ -359,7 +366,7 @@ function HomePage() {
                 <div>
                   <h3 className="font-display text-lg font-semibold tracking-tight">{c.name}</h3>
                   <p className="mt-0.5 text-xs text-muted-foreground">
-                    {c.count} {c.count === 1 ? "listing" : "listings"}
+                    {c.count} {c.count === 1 ? t("home.listing") : t("home.listings")}
                   </p>
                 </div>
                 <ArrowUpRight className="h-4 w-4 text-muted-foreground transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
@@ -373,35 +380,34 @@ function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
           <div className="rounded-[24px] border border-border bg-card p-10 shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
-            <span className="text-eyebrow">Why us</span>
+            <span className="text-eyebrow">{t("home.whyEyebrow")}</span>
             <h2 className="mt-3 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.03em] sm:text-5xl">
-              Built for the international community in Korea.
+              {t("home.whyTitle")}
             </h2>
             <p className="mt-4 max-w-md text-muted-foreground">
-              Every listing is vetted for language access, transparency, and expat friendliness — so
-              you can book with confidence.
+              {t("home.whyDesc")}
             </p>
             <Link
               to="/browse"
               className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-hover"
             >
-              Start browsing <ArrowRight className="h-3.5 w-3.5" />
+              {t("home.startBrowsing")} <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {WHY_ITEMS.map((item) => (
               <div
-                key={item.title}
+                key={item.titleKey}
                 className="rounded-[18px] border border-border bg-card p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.2)]"
               >
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/5 text-primary">
                   <item.icon strokeWidth={1.5} className="h-5 w-5" />
                 </span>
                 <h3 className="mt-4 font-display text-lg font-semibold tracking-tight">
-                  {item.title}
+                  {t(item.titleKey)}
                 </h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  {item.description}
+                  {t(item.descKey)}
                 </p>
               </div>
             ))}
@@ -423,14 +429,13 @@ function HomePage() {
           <div className="relative grid gap-8 p-10 sm:p-14 md:grid-cols-[1.4fr_1fr] md:items-center">
             <div>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-background/20 bg-background/10 px-2.5 py-1 text-xs font-medium backdrop-blur">
-                <Sparkles className="h-3 w-3" /> For business owners
+                <Sparkles className="h-3 w-3" /> {t("home.ctaTag")}
               </span>
               <h2 className="mt-4 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.03em] sm:text-5xl">
-                Get discovered by Korea's international community.
+                {t("home.ctaTitle")}
               </h2>
               <p className="mt-4 max-w-lg text-background/70">
-                List your business, respond to reviews, and reach thousands of foreigners searching
-                for English-friendly services every month.
+                {t("home.ctaDesc")}
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col md:items-end">
@@ -439,7 +444,7 @@ function HomePage() {
                   size="lg"
                   className="w-full bg-primary text-primary-foreground shadow-brand-glow hover:bg-primary-hover sm:w-auto"
                 >
-                  List your business
+                  {t("home.listBusiness")}
                 </Button>
               </Link>
               <Link to="/dashboard">
@@ -448,13 +453,14 @@ function HomePage() {
                   variant="ghost"
                   className="w-full text-background hover:bg-background/10 sm:w-auto"
                 >
-                  Business dashboard
+                  {t("home.businessDashboard")}
                 </Button>
               </Link>
             </div>
           </div>
         </div>
       </section>
+
     </div>
   );
 }
@@ -517,6 +523,7 @@ function PremiumBusinessCard({
     districts?: { name: string } | null;
   };
 }) {
+  const { t } = useTranslation();
   const open = useOpenNow(business.hours);
   const qc = useQueryClient();
   const [saved, setSaved] = useState(false);
@@ -529,7 +536,7 @@ function PremiumBusinessCard({
     e.stopPropagation();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast("Please sign in to save favorites.");
+      toast(t("business.signInToSave"));
       return;
     }
     if (saved) {
@@ -538,7 +545,7 @@ function PremiumBusinessCard({
     } else {
       await supabase.from("favorites").insert({ user_id: user.id, business_id: business.id });
       setSaved(true);
-      toast.success("Saved");
+      toast.success(t("business.saved"));
     }
     qc.invalidateQueries({ queryKey: ["favorites"] });
   };
@@ -563,7 +570,7 @@ function PremiumBusinessCard({
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-            No image
+            {t("business.noImage")}
           </div>
         )}
 
@@ -571,7 +578,7 @@ function PremiumBusinessCard({
         {business.verified && (
           <div className="absolute left-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm backdrop-blur">
             <BadgeCheck className="h-3.5 w-3.5" />
-            Verified
+            {t("business.verified")}
           </div>
         )}
 
@@ -579,7 +586,7 @@ function PremiumBusinessCard({
         <button
           type="button"
           onClick={toggleSave}
-          aria-label={saved ? "Remove bookmark" : "Save"}
+          aria-label={saved ? t("business.removeBookmark") : t("business.save")}
           className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-foreground shadow-sm backdrop-blur transition-all duration-200 hover:scale-110 hover:text-primary"
         >
           <Bookmark
@@ -631,7 +638,7 @@ function PremiumBusinessCard({
           {hasEnglish && (
             <span className="inline-flex items-center gap-1 rounded-full bg-primary/8 px-2.5 py-1 text-[11px] font-medium text-primary">
               <Languages className="h-3 w-3" />
-              English available
+              {t("business.englishAvailable")}
             </span>
           )}
           {open !== null && (
@@ -644,7 +651,7 @@ function PremiumBusinessCard({
               )}
             >
               <Clock className="h-3 w-3" />
-              {open ? "Open now" : "Closed"}
+              {open ? t("business.openNow") : t("business.closed")}
             </span>
           )}
         </div>
@@ -661,26 +668,10 @@ function PremiumBusinessCard({
 }
 
 const WHY_ITEMS = [
-  {
-    icon: Languages,
-    title: "English-friendly",
-    description: "Every listing declares languages spoken so you know before you go.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Verified listings",
-    description: "Businesses are vetted by our team before appearing on the platform.",
-  },
-  {
-    icon: Star,
-    title: "Real reviews",
-    description: "Honest feedback from foreigners who've actually used the service.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Made for expats",
-    description: "Built by the international community, for the international community.",
-  },
+  { icon: Languages, titleKey: "home.why.englishTitle", descKey: "home.why.englishDesc" },
+  { icon: BadgeCheck, titleKey: "home.why.verifiedTitle", descKey: "home.why.verifiedDesc" },
+  { icon: Star, titleKey: "home.why.reviewsTitle", descKey: "home.why.reviewsDesc" },
+  { icon: ShieldCheck, titleKey: "home.why.expatsTitle", descKey: "home.why.expatsDesc" },
 ] as const;
 
 const CITY_IMAGES: Record<string, string> = {
