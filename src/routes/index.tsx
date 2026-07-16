@@ -159,18 +159,16 @@ function HomePage() {
           <div className="mx-auto max-w-4xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
               <ShieldCheck className="h-3.5 w-3.5" />
-              Trusted by Korea's international community
+              {t("home.trustBadge")}
             </span>
 
             <h1 className="mt-8 font-display text-5xl font-bold leading-[0.98] tracking-[-0.045em] text-foreground sm:text-6xl md:text-[5.5rem]">
-              Find trusted services
+              {t("home.headlineA")}
               <br />
-              in Korea, <span className="text-primary">in your language.</span>
+              {t("home.headlineB")} <span className="text-primary">{t("home.headlineC")}</span>
             </h1>
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              The verified directory for foreigners living in Korea — doctors, lawyers,
-              real estate, salons and more, all confirmed English-friendly and reviewed
-              by the community.
+              {t("home.subtitle")}
             </p>
 
             {/* Floating Airbnb-style search box */}
@@ -182,14 +180,14 @@ function HomePage() {
                 <Search className="h-5 w-5 shrink-0 text-primary" />
                 <div className="flex-1 text-left">
                   <label className="block text-[11px] font-semibold uppercase tracking-wider text-foreground/70">
-                    Search
+                    {t("home.searchLabel")}
                   </label>
                   <Input
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
-                    placeholder="Doctor, lawyer, salon…"
+                    placeholder={t("home.searchPlaceholder")}
                     className="h-6 border-0 bg-transparent px-0 text-sm shadow-none placeholder:text-muted-foreground/70 focus-visible:ring-0"
-                    aria-label="Search services"
+                    aria-label={t("home.searchLabel")}
                   />
                 </div>
               </div>
@@ -200,15 +198,15 @@ function HomePage() {
                 <MapPin className="h-5 w-5 shrink-0 text-primary" />
                 <div className="flex-1 text-left">
                   <label className="block text-[11px] font-semibold uppercase tracking-wider text-foreground/70">
-                    Location
+                    {t("home.locationLabel")}
                   </label>
                   <select
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     className="h-6 w-full bg-transparent text-sm text-foreground outline-none"
-                    aria-label="Location"
+                    aria-label={t("home.locationLabel")}
                   >
-                    <option value="">Anywhere in Korea</option>
+                    <option value="">{t("home.anywhere")}</option>
                     {cities.data?.map((c) => (
                       <option key={c.id} value={c.slug}>
                         {c.name}
@@ -224,25 +222,28 @@ function HomePage() {
                 className="h-14 gap-2 rounded-[18px] px-8 text-base font-semibold shadow-brand-glow md:rounded-full"
               >
                 <Search className="h-4 w-4" />
-                Search
+                {t("home.searchBtn")}
               </Button>
             </form>
 
             {/* Popular chips */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
               <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                Popular
+                {t("home.popular")}
               </span>
-              {POPULAR_CHIPS.map((ex) => (
-                <button
-                  key={ex}
-                  type="button"
-                  onClick={() => navigate({ to: "/browse", search: { q: ex } })}
-                  className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground/80 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-md"
-                >
-                  {ex}
-                </button>
-              ))}
+              {POPULAR_CHIP_KEYS.map((key) => {
+                const label = t(key);
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => navigate({ to: "/browse", search: { q: label } })}
+                    className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground/80 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-md"
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -251,33 +252,36 @@ function HomePage() {
       {/* Category cards */}
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Browse"
-          title="What are you looking for?"
-          description="Nine essential categories, curated for the international community in Korea."
+          eyebrow={t("home.browseEyebrow")}
+          title={t("home.browseTitle")}
+          description={t("home.browseDesc")}
         />
 
         <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-          {POPULAR_CATEGORIES.map((cat) => (
-            <Link
-              key={cat.slug}
-              to="/browse"
-              search={{ category: cat.slug }}
-              className="group flex items-center gap-5 rounded-[18px] border border-border/70 bg-card p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.25)]"
-            >
-              <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/5 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                <cat.icon strokeWidth={1.5} className="h-7 w-7" />
-              </span>
-              <div className="flex-1">
-                <div className="font-display text-lg font-semibold tracking-tight text-foreground">
-                  {cat.label}
+          {POPULAR_CATEGORIES.map((cat) => {
+            const label = t(cat.labelKey);
+            return (
+              <Link
+                key={cat.slug}
+                to="/browse"
+                search={{ category: cat.slug }}
+                className="group flex items-center gap-5 rounded-[18px] border border-border/70 bg-card p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.25)]"
+              >
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/5 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+                  <cat.icon strokeWidth={1.5} className="h-7 w-7" />
+                </span>
+                <div className="flex-1">
+                  <div className="font-display text-lg font-semibold tracking-tight text-foreground">
+                    {label}
+                  </div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">
+                    {t("home.explore")} {label.toLowerCase()}
+                  </div>
                 </div>
-                <div className="mt-0.5 text-xs text-muted-foreground">
-                  Explore {cat.label.toLowerCase()}
-                </div>
-              </div>
-              <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
-            </Link>
-          ))}
+                <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+              </Link>
+            );
+          })}
 
           <Link
             to="/browse"
@@ -288,16 +292,17 @@ function HomePage() {
             </span>
             <div className="flex-1">
               <div className="font-display text-lg font-semibold tracking-tight text-foreground">
-                More
+                {t("home.more")}
               </div>
               <div className="mt-0.5 text-xs text-muted-foreground">
-                See all categories
+                {t("home.seeAllCategories")}
               </div>
             </div>
             <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
           </Link>
         </div>
       </section>
+
 
       {/* Featured — premium cards */}
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
