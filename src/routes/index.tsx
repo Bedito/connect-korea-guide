@@ -667,26 +667,10 @@ function PremiumBusinessCard({
 }
 
 const WHY_ITEMS = [
-  {
-    icon: Languages,
-    title: "English-friendly",
-    description: "Every listing declares languages spoken so you know before you go.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Verified listings",
-    description: "Businesses are vetted by our team before appearing on the platform.",
-  },
-  {
-    icon: Star,
-    title: "Real reviews",
-    description: "Honest feedback from foreigners who've actually used the service.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Made for expats",
-    description: "Built by the international community, for the international community.",
-  },
+  { icon: Languages, titleKey: "home.why.englishTitle", descKey: "home.why.englishDesc" },
+  { icon: BadgeCheck, titleKey: "home.why.verifiedTitle", descKey: "home.why.verifiedDesc" },
+  { icon: Star, titleKey: "home.why.reviewsTitle", descKey: "home.why.reviewsDesc" },
+  { icon: ShieldCheck, titleKey: "home.why.expatsTitle", descKey: "home.why.expatsDesc" },
 ] as const;
 
 const CITY_IMAGES: Record<string, string> = {
