@@ -675,7 +675,7 @@ const WHY_ITEMS = [
 ] as const;
 
 const CITY_IMAGES: Record<string, string> = {
-  seoul: "https://image.spread.ai/v1/f/581a533b-82a8-48b8-b7ae-244e45853549/Seoul_N_Tower_Modern_City.png",
+  seoul: "https://images.pexels.com/photos/23879182/pexels-photo-23879182.jpeg",
   busan: "https://image.spread.ai/v1/f/723c3b06-444c-474d-9d41-3a8302f3069b/Busan_Marine_City.png",
   incheon: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=800&q=80",
   daegu: "https://images.unsplash.com/photo-1546874177-9e664107314e?w=800&q=80",
