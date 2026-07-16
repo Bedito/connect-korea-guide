@@ -111,7 +111,7 @@ function NavLink({
   to,
   params,
   children,
-}: {git pull
+}: {
   to: string;
   params?: { category: string };
   children: React.ReactNode;
