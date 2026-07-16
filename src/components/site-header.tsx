@@ -1,7 +1,9 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Heart, Search, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { BrandLogo } from "@/components/brand-logo";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { useAuth } from "@/lib/auth";
 import { useIsAdmin } from "@/lib/roles";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,6 +19,7 @@ export function SiteHeader() {
   const { user } = useAuth();
   const { isAdmin } = useIsAdmin();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -31,21 +34,21 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          <NavLink to="/browse">Browse</NavLink>
+          <NavLink to="/browse">{t("nav.browse")}</NavLink>
           <NavLink to="/browse" params={{ category: "Beauty & Wellness" }}>
-            Beauty Clinics
+            {t("nav.beauty")}
           </NavLink>
           <NavLink to="/browse" params={{ category: "doctors" }}>
-            Healthcare
+            {t("nav.healthcare")}
           </NavLink>
           <NavLink to="/browse" params={{ category: "real-estate" }}>
-            Real estate
+            {t("nav.realEstate")}
           </NavLink>
         </nav>
 
         <div className="flex items-center gap-1.5">
           <Link to="/browse" className="md:hidden">
-            <Button size="icon" variant="ghost" aria-label="Search">
+            <Button size="icon" variant="ghost" aria-label={t("nav.search")}>
               <Search className="h-5 w-5" />
             </Button>
           </Link>
@@ -56,7 +59,7 @@ export function SiteHeader() {
                   variant="ghost"
                   size="icon"
                   className="rounded-full ring-1 ring-border/70"
-                  aria-label="Account"
+                  aria-label={t("nav.account")}
                 >
                   <User className="h-5 w-5" />
                 </Button>
@@ -66,24 +69,24 @@ export function SiteHeader() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link to="/dashboard">
-                    <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
+                    <LayoutDashboard className="mr-2 h-4 w-4" /> {t("nav.dashboard")}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/favorites">
-                    <Heart className="mr-2 h-4 w-4" /> Favorites
+                    <Heart className="mr-2 h-4 w-4" /> {t("nav.favorites")}
                   </Link>
                 </DropdownMenuItem>
                 {isAdmin && (
                   <DropdownMenuItem asChild>
                     <Link to="/admin">
-                      <Shield className="mr-2 h-4 w-4" /> Admin
+                      <Shield className="mr-2 h-4 w-4" /> {t("nav.admin")}
                     </Link>
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut}>
-                  <LogOut className="mr-2 h-4 w-4" /> Sign out
+                  <LogOut className="mr-2 h-4 w-4" /> {t("nav.signOut")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -91,16 +94,17 @@ export function SiteHeader() {
             <>
               <Link to="/auth" className="hidden sm:inline-flex">
                 <Button variant="ghost" size="sm" className="font-medium">
-                  Sign in
+                  {t("nav.signIn")}
                 </Button>
               </Link>
               <Link to="/auth" search={{ mode: "signup" }}>
                 <Button size="sm" className="font-medium shadow-brand-glow">
-                  Become a Partner
+                  {t("nav.becomePartner")}
                 </Button>
               </Link>
             </>
           )}
+          <LanguageSwitcher />
         </div>
       </div>
     </header>
