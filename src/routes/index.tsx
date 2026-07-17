@@ -262,7 +262,7 @@ function HomePage() {
           description={t("home.browseDesc")}
         />
 
-        <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
+        <div className="mt-14 grid auto-rows-fr grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
           {POPULAR_CATEGORIES.map((cat) => {
             const label = t(cat.labelKey);
             return (
@@ -270,40 +270,40 @@ function HomePage() {
                 key={cat.slug}
                 to="/browse"
                 search={{ category: cat.slug }}
-                className="group flex items-center gap-5 rounded-[18px] border border-border/70 bg-card p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.25)]"
+                className="group relative flex h-full flex-col rounded-[18px] border border-border/70 bg-card p-5 pr-10 shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.25)] sm:flex-row sm:items-center sm:gap-5 sm:p-6"
               >
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/5 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                  <cat.icon strokeWidth={1.5} className="h-7 w-7" />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/5 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground sm:h-14 sm:w-14">
+                  <cat.icon strokeWidth={1.5} className="h-6 w-6 sm:h-7 sm:w-7" />
                 </span>
-                <div className="flex-1">
-                  <div className="font-display text-lg font-semibold tracking-tight text-foreground">
+                <div className="mt-3 min-w-0 flex-1 sm:mt-0">
+                  <div className="font-display text-base font-semibold leading-tight tracking-tight text-foreground break-words sm:text-lg">
                     {label}
                   </div>
-                  <div className="mt-0.5 text-xs text-muted-foreground">
+                  <div className="mt-1 text-xs text-muted-foreground break-words">
                     {t("home.explore")} {label.toLowerCase()}
                   </div>
                 </div>
-                <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                <ArrowUpRight className="absolute right-4 top-4 h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary sm:static" />
               </Link>
             );
           })}
 
           <Link
             to="/browse"
-            className="group flex items-center gap-5 rounded-[18px] border border-dashed border-border bg-transparent p-6 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/40 hover:bg-card hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.25)]"
+            className="group relative flex h-full flex-col rounded-[18px] border border-dashed border-border bg-transparent p-5 pr-10 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-primary/40 hover:bg-card hover:shadow-[0_20px_40px_-20px_rgba(37,99,235,0.25)] sm:flex-row sm:items-center sm:gap-5 sm:p-6"
           >
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-muted text-muted-foreground transition-colors duration-300 group-hover:bg-primary/10 group-hover:text-primary">
-              <MoreHorizontal strokeWidth={1.5} className="h-7 w-7" />
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-muted text-muted-foreground transition-colors duration-300 group-hover:bg-primary/10 group-hover:text-primary sm:h-14 sm:w-14">
+              <MoreHorizontal strokeWidth={1.5} className="h-6 w-6 sm:h-7 sm:w-7" />
             </span>
-            <div className="flex-1">
-              <div className="font-display text-lg font-semibold tracking-tight text-foreground">
+            <div className="mt-3 min-w-0 flex-1 sm:mt-0">
+              <div className="font-display text-base font-semibold leading-tight tracking-tight text-foreground break-words sm:text-lg">
                 {t("home.more")}
               </div>
-              <div className="mt-0.5 text-xs text-muted-foreground">
+              <div className="mt-1 text-xs text-muted-foreground break-words">
                 {t("home.seeAllCategories")}
               </div>
             </div>
-            <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+            <ArrowUpRight className="absolute right-4 top-4 h-5 w-5 shrink-0 text-muted-foreground/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary sm:static" />
           </Link>
         </div>
       </section>
