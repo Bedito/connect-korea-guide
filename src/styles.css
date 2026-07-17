@@ -119,6 +119,10 @@
   * {
     border-color: var(--color-border);
   }
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
   html {
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
@@ -130,6 +134,9 @@
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "ss01", "cv11";
     letter-spacing: -0.005em;
+  }
+  img, svg, video {
+    max-width: 100%;
   }
   h1, h2, h3, h4, .font-serif, .font-display {
     font-family: var(--font-display);
