@@ -28,12 +28,12 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link to="/" aria-label="친구Base home">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6 lg:px-8">
+        <Link to="/" aria-label="친구Base home" className="shrink-0">
           <BrandLogo size="md" />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           <NavLink to="/browse">{t("nav.browse")}</NavLink>
           <NavLink to="/browse" params={{ category: "Beauty & Wellness" }}>
             {t("nav.beauty")}
@@ -46,8 +46,8 @@ export function SiteHeader() {
           </NavLink>
         </nav>
 
-        <div className="flex items-center gap-1.5">
-          <Link to="/browse" className="md:hidden">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
+          <Link to="/browse" className="lg:hidden">
             <Button size="icon" variant="ghost" aria-label={t("nav.search")}>
               <Search className="h-5 w-5" />
             </Button>
@@ -93,12 +93,12 @@ export function SiteHeader() {
           ) : (
             <>
               <Link to="/auth" className="hidden sm:inline-flex">
-                <Button variant="ghost" size="sm" className="font-medium">
+                <Button variant="ghost" size="sm" className="whitespace-nowrap font-medium">
                   {t("nav.signIn")}
                 </Button>
               </Link>
               <Link to="/auth" search={{ mode: "signup" }}>
-                <Button size="sm" className="font-medium shadow-brand-glow">
+                <Button size="sm" className="whitespace-nowrap px-3 font-medium shadow-brand-glow sm:px-4">
                   {t("nav.becomePartner")}
                 </Button>
               </Link>
