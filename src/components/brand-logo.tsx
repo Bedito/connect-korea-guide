@@ -2,11 +2,12 @@ import logoAsset from "@/assets/main-logo.png";
 
 type Size = "sm" | "md" | "lg" | "xl";
 
-const sizeMap: Record<Size, { height: number; markOnly: number }> = {
-  sm: { height: 150, markOnly: 150 },
-  md: { height: 130, markOnly: 140 },
-  lg: { height: 150, markOnly: 150 },
-  xl: { height: 150, markOnly: 150 },
+// Responsive height in rem: [mobile, sm+]
+const sizeMap: Record<Size, { mobile: string; desktop: string }> = {
+  sm: { mobile: "1.75rem", desktop: "2rem" },   // 28 / 32
+  md: { mobile: "2.25rem", desktop: "3rem" },   // 36 / 48
+  lg: { mobile: "2.75rem", desktop: "3.5rem" }, // 44 / 56
+  xl: { mobile: "3.25rem", desktop: "4.5rem" }, // 52 / 72
 };
 
 export function LogoMark({ size = 40 }: { size?: number }) {
@@ -15,7 +16,7 @@ export function LogoMark({ size = 40 }: { size?: number }) {
       src={logoAsset}
       alt="친구Base"
       style={{ height: size, width: "auto", objectFit: "contain", objectPosition: "left center" }}
-      className="select-none"
+      className="max-w-full select-none"
       draggable={false}
     />
   );
@@ -23,7 +24,6 @@ export function LogoMark({ size = 40 }: { size?: number }) {
 
 export function BrandLogo({
   size = "md",
-  showWordmark = true,
   className = "",
 }: {
   size?: Size;
@@ -31,16 +31,18 @@ export function BrandLogo({
   className?: string;
 }) {
   const s = sizeMap[size];
-  const height = showWordmark ? s.height : s.markOnly;
   return (
-    <span className={`inline-flex items-center ${className}`}>
+    <span
+      className={`inline-flex items-center ${className}`}
+      style={{ ["--logo-h-mobile" as string]: s.mobile, ["--logo-h-desktop" as string]: s.desktop }}
+    >
       <img
         src={logoAsset}
         alt="친구Base"
-        style={{ height, width: "auto", objectFit: "contain" }}
-        className="select-none"
+        className="h-[var(--logo-h-mobile)] w-auto max-w-full select-none object-contain sm:h-[var(--logo-h-desktop)]"
         draggable={false}
       />
     </span>
   );
 }
+
