@@ -4,10 +4,10 @@ type Size = "sm" | "md" | "lg" | "xl";
 
 // Responsive height in rem: [mobile, sm+]
 const sizeMap: Record<Size, { mobile: string; desktop: string }> = {
-  sm: { mobile: "1.75rem", desktop: "2rem" },   // 28 / 32
-  md: { mobile: "2.25rem", desktop: "3rem" },   // 36 / 48
-  lg: { mobile: "2.75rem", desktop: "3.5rem" }, // 44 / 56
-  xl: { mobile: "3.25rem", desktop: "4.5rem" }, // 52 / 72
+  sm: { mobile: "2.25rem", desktop: "2.5rem" },  // 36 / 40
+  md: { mobile: "3rem", desktop: "3.75rem" },    // 48 / 60
+  lg: { mobile: "3.5rem", desktop: "4.5rem" },   // 56 / 72
+  xl: { mobile: "4rem", desktop: "5.5rem" },     // 64 / 88
 };
 
 export function LogoMark({ size = 40 }: { size?: number }) {
