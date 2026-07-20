@@ -27,9 +27,9 @@ export function SiteHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6 lg:px-8">
-        <Link to="/" aria-label="친구Base home" className="shrink-0">
+    <header className="fixed inset-x-0 top-0 z-50 w-full border-b border-border/70 bg-background/90 backdrop-blur-xl">
+      <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-3 sm:flex sm:justify-between sm:gap-4 sm:px-6 lg:px-8">
+        <Link to="/" aria-label="친구Base home" className="min-w-0 overflow-visible">
           <BrandLogo size="md" />
         </Link>
 
@@ -98,7 +98,7 @@ export function SiteHeader() {
                 </Button>
               </Link>
               <Link to="/auth" search={{ mode: "signup" }}>
-                <Button size="sm" className="whitespace-nowrap px-3 font-medium shadow-brand-glow sm:px-4">
+                <Button size="sm" className="whitespace-nowrap px-2 text-xs font-medium shadow-brand-glow min-[390px]:px-3 sm:px-4 sm:text-sm">
                   {t("nav.becomePartner")}
                 </Button>
               </Link>

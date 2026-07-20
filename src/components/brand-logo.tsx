@@ -1,13 +1,13 @@
-import logoAsset from "@/assets/main-logo.png";
+import logoAsset from "@/assets/main-logo-clean.png";
 
 type Size = "sm" | "md" | "lg" | "xl";
 
 // Responsive height in rem: [mobile, sm+]
 const sizeMap: Record<Size, { mobile: string; desktop: string }> = {
-  sm: { mobile: "2.25rem", desktop: "2.5rem" },  // 36 / 40
-  md: { mobile: "3rem", desktop: "3.75rem" },    // 48 / 60
-  lg: { mobile: "3.5rem", desktop: "4.5rem" },   // 56 / 72
-  xl: { mobile: "4rem", desktop: "5.5rem" },     // 64 / 88
+  sm: { mobile: "2.25rem", desktop: "2.5rem" },
+  md: { mobile: "2.75rem", desktop: "3.25rem" },
+  lg: { mobile: "3.5rem", desktop: "4.25rem" },
+  xl: { mobile: "4.5rem", desktop: "5.5rem" },
 };
 
 export function LogoMark({ size = 40 }: { size?: number }) {
@@ -33,7 +33,7 @@ export function BrandLogo({
   const s = sizeMap[size];
   return (
     <span
-      className={`inline-flex items-center ${className}`}
+      className={`inline-flex min-w-0 items-center ${className}`}
       style={{ ["--logo-h-mobile" as string]: s.mobile, ["--logo-h-desktop" as string]: s.desktop }}
     >
       <img
