@@ -641,7 +641,7 @@ function BusinessDetail() {
           </section>
         )}
 
-        <div className="mt-16 flex justify-center border-t border-border/40 pt-6">
+        <div className="mt-8 flex justify-center border-t border-border/40 pt-3 pb-2">
           <ReportBusinessDialog businessId={b.id} businessName={b.name} />
         </div>
       </div>
