@@ -111,7 +111,7 @@ function Consent() {
         <p className="font-medium">This lets {clientName} use 친구Base as you.</p>
         {scopes.length > 0 && (
           <ul className="mt-3 space-y-1 text-muted-foreground">
-            {scopes.map((s) => (
+            {scopes.map((s: string) => (
               <li key={s}>• {s}</li>
             ))}
           </ul>

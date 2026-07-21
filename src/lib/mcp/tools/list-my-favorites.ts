@@ -16,14 +16,16 @@ export default defineTool({
   inputSchema: {},
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async (_input, ctx) => {
-    if (!ctx.isAuthenticated()) {
+    const token = ctx.getToken();
+    const userId = ctx.getUserId();
+    if (!ctx.isAuthenticated() || !token || !userId) {
       return { content: [{ type: "text", text: "Not authenticated" }], isError: true };
     }
-    const supabase = supabaseForUser(ctx.getToken());
+    const supabase = supabaseForUser(token);
     const { data, error } = await supabase
       .from("favorites")
       .select("business_id, created_at, businesses:business_id(id, name, slug, tagline, verified)")
-      .eq("user_id", ctx.getUserId())
+      .eq("user_id", userId)
       .order("created_at", { ascending: false });
     if (error) return { content: [{ type: "text", text: error.message }], isError: true };
     return {

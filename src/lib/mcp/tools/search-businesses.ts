@@ -22,14 +22,15 @@ export default defineTool({
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: async ({ query, category, limit }, ctx) => {
-    if (!ctx.isAuthenticated()) {
+    const token = ctx.getToken();
+    if (!ctx.isAuthenticated() || !token) {
       return { content: [{ type: "text", text: "Not authenticated" }], isError: true };
     }
-    const supabase = supabaseForUser(ctx.getToken());
+    const supabase = supabaseForUser(token);
     let q = supabase
       .from("businesses")
       .select("id, name, slug, tagline, description, verified, rating, review_count, categories:category_id(slug,name)")
-      .eq("status", "published")
+      .eq("status", "approved")
       .or(`name.ilike.%${query}%,tagline.ilike.%${query}%,description.ilike.%${query}%`)
       .order("verified", { ascending: false })
       .order("rating", { ascending: false })

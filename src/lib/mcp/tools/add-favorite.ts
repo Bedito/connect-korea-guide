@@ -19,10 +19,12 @@ export default defineTool({
   },
   annotations: { readOnlyHint: false, idempotentHint: true, openWorldHint: false },
   handler: async ({ slug }, ctx) => {
-    if (!ctx.isAuthenticated()) {
+    const token = ctx.getToken();
+    const userId = ctx.getUserId();
+    if (!ctx.isAuthenticated() || !token || !userId) {
       return { content: [{ type: "text", text: "Not authenticated" }], isError: true };
     }
-    const supabase = supabaseForUser(ctx.getToken());
+    const supabase = supabaseForUser(token);
     const { data: biz, error: bizErr } = await supabase
       .from("businesses")
       .select("id, name")
@@ -33,7 +35,7 @@ export default defineTool({
 
     const { error } = await supabase
       .from("favorites")
-      .upsert({ user_id: ctx.getUserId(), business_id: biz.id }, { onConflict: "user_id,business_id" });
+      .upsert({ user_id: userId, business_id: biz.id }, { onConflict: "user_id,business_id" });
     if (error) return { content: [{ type: "text", text: error.message }], isError: true };
     return { content: [{ type: "text", text: `Added ${biz.name} to favorites.` }] };
   },
