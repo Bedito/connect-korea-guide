@@ -163,11 +163,12 @@ function AuthPage() {
         size="lg"
         className="w-full"
         onClick={async () => {
+          const redirectUri = `${window.location.origin}${nextPath ?? ""}`;
           const result = await lovable.auth.signInWithOAuth("google", {
-            redirect_uri: window.location.origin,
+            redirect_uri: redirectUri,
           });
           if (result.error) toast(result.error.message ?? "Google sign-in failed");
-          else if (!result.redirected) navigate({ to: "/" });
+          else if (!result.redirected) returnTo();
         }}
       >
         <svg className="mr-2 h-4 w-4" viewBox="0 0 48 48" aria-hidden="true">
@@ -183,7 +184,7 @@ function AuthPage() {
         {isSignup ? "Already have an account? " : "New to 친구Base? "}
         <Link
           to="/auth"
-          search={{ mode: isSignup ? "signin" : "signup" }}
+          search={{ mode: isSignup ? "signin" : "signup", next }}
           className="text-foreground underline underline-offset-4"
         >
           {isSignup ? "Sign in" : "Create an account"}
