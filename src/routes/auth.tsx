@@ -85,11 +85,6 @@ function AuthPage() {
       setLoading(false);
     }
   };
-      toast(msg);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="mx-auto flex max-w-md flex-col px-4 py-16 sm:py-24">
