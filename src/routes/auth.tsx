@@ -12,7 +12,15 @@ import { toast } from "sonner";
 
 const searchSchema = z.object({
   mode: fallback(z.enum(["signin", "signup"]), "signin").default("signin"),
+  next: fallback(z.string(), "").default(""),
 });
+
+// Only same-origin relative paths are safe to return to.
+function safeNext(next: string): string | null {
+  if (!next) return null;
+  if (!next.startsWith("/") || next.startsWith("//")) return null;
+  return next;
+}
 
 export const Route = createFileRoute("/auth")({
   validateSearch: zodValidator(searchSchema),
@@ -32,13 +40,22 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
-  const { mode } = Route.useSearch();
+  const { mode, next } = Route.useSearch();
   const navigate = useNavigate();
   const isSignup = mode === "signup";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const nextPath = safeNext(next);
+  const returnTo = () => {
+    if (nextPath) {
+      window.location.href = nextPath;
+      return;
+    }
+    navigate({ to: "/" });
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,17 +66,17 @@ function AuthPage() {
           email,
           password,
           options: {
-            emailRedirectTo: `${window.location.origin}/`,
+            emailRedirectTo: `${window.location.origin}${nextPath ?? "/"}`,
             data: { display_name: name },
           },
         });
         if (error) throw error;
         toast("Account created — you're signed in.");
-        navigate({ to: "/" });
+        returnTo();
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        navigate({ to: "/" });
+        returnTo();
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Something went wrong";
@@ -146,11 +163,12 @@ function AuthPage() {
         size="lg"
         className="w-full"
         onClick={async () => {
+          const redirectUri = `${window.location.origin}${nextPath ?? ""}`;
           const result = await lovable.auth.signInWithOAuth("google", {
-            redirect_uri: window.location.origin,
+            redirect_uri: redirectUri,
           });
           if (result.error) toast(result.error.message ?? "Google sign-in failed");
-          else if (!result.redirected) navigate({ to: "/" });
+          else if (!result.redirected) returnTo();
         }}
       >
         <svg className="mr-2 h-4 w-4" viewBox="0 0 48 48" aria-hidden="true">
@@ -166,7 +184,7 @@ function AuthPage() {
         {isSignup ? "Already have an account? " : "New to 친구Base? "}
         <Link
           to="/auth"
-          search={{ mode: isSignup ? "signin" : "signup" }}
+          search={{ mode: isSignup ? "signin" : "signup", next }}
           className="text-foreground underline underline-offset-4"
         >
           {isSignup ? "Sign in" : "Create an account"}
