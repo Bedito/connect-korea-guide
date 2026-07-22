@@ -16,18 +16,18 @@ import {
 } from "@/lib/queries";
 
 const searchSchema = z.object({
-  q: fallback(z.string().optional(), undefined),
-  category: fallback(z.string().optional(), undefined),
-  city: fallback(z.string().optional(), undefined),
-  district: fallback(z.string().optional(), undefined),
-  languages: fallback(z.string().array(), []).default([]),
-  verified: fallback(z.boolean(), false).default(false),
-  openNow: fallback(z.boolean(), false).default(false),
-  parking: fallback(z.boolean(), false).default(false),
-  online: fallback(z.boolean(), false).default(false),
-  emergency: fallback(z.boolean(), false).default(false),
-  reservation: fallback(z.boolean(), false).default(false),
-  sort: fallback(z.string(), "recommended").default("recommended"),
+  q: z.string().optional().catch(undefined),
+  category: z.string().optional().catch(undefined),
+  city: z.string().optional().catch(undefined),
+  district: z.string().optional().catch(undefined),
+  languages: z.array(z.string()).catch([]).default([]),
+  verified: z.boolean().catch(false).default(false),
+  openNow: z.boolean().catch(false).default(false),
+  parking: z.boolean().catch(false).default(false),
+  online: z.boolean().catch(false).default(false),
+  emergency: z.boolean().catch(false).default(false),
+  reservation: z.boolean().catch(false).default(false),
+  sort: z.string().catch("recommended").default("recommended"),
 });
 
 export const Route = createFileRoute("/browse")({
